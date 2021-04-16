@@ -43,7 +43,7 @@
 <p>Simple answer, I figured I don’t have to. I’m building a plane, not a multicopter, and planes have been flying (many still do) for decades without any fancy control loops. With a somewhat stable airframe, there is no reason why a few microseconds here and there would hurt anything. I finally settled on a RasPi 3A+, because I figured that a RasPi Zero would be too slow.</p>
 <h3 id="adding-an-imu">Adding an IMU</h3>
 <p>So, PX4 it is. A flight controller needs some data to work with, and usually the most important sensor is the intertial measurement unit (IMU). This is a fancy name for a combination of gyroscope, accelerometer and (optionally) magnetometer/compass. The IMU tells the flight controller if the plane is facing the right way, and it’s not, say, upside down and rapidly accelerating towards the ground (pro tip: avoid this situation).</p>
-<p>The good news is that PX4 supports almost every sensor and scenario out there. The bad news is that the sensor I already have (<a href="https://github.com/BoschSensortec/BNO055_driver">BNO055</a>) isn not supported. Well, let’s put on our black hoodies and fingerless gloves and get hacking!</p>
+<p>The good news is that PX4 supports almost every sensor and scenario out there. The bad news is that the sensor I already have (<a href="https://github.com/BoschSensortec/BNO055_driver">BNO055</a>) is not supported. Well, let’s put on our black hoodies and fingerless gloves and get hacking!</p>
 <p>Sadly, PX4 is pretty hard to get into, to a point where the official documentation recommends you to copy-paste an existing driver and mess with it until it works. After (way too) much time, I managed to squeeze the official Bosch driver into a <a href="https://github.com/IGNNE/PX4-Autopilot/tree/bno055-imu">PX4 Module</a>. Currently (04.21) it’s not 100% finished, but it is stable enough that I will focus on the next steps.</p>
 <h3 id="adding-some-actuators">Adding Some Actuators</h3>
 <p>Actuators are machine parts that do something. I want the plane to do something, so I probably need some actuators.</p>
@@ -77,10 +77,15 @@
 <p>Instead, what I already have is my laptop/tablet, on which I am writing this. I also have a pretty smart RasPi as a flight controller. With these two in mind, I found something called <a href="https://befinitiv.wordpress.com/wifibroadcast-analog-like-transmission-of-live-video-data/">Wifibroadcast</a>, which uses (you guessed it) WiFi cards to transmit raw data instead of all the fancy networking stuff. Since it’s just using WiFi and since I’m not touching the output limits or antennas, it <em>should</em> be as legal as a normal hotspot. I would recommend against using it near other people’s WiFis though, since it tends to kind of jam the WiFi channel it uses, and people probably won’t like that.</p>
 <h3 id="fun-with-wifi-adaptors">Fun with WiFi Adaptors</h3>
 <p>I got myself a pair of TPLINK TL-WN722N V2 (Realtek RTL8188) cards, which are not really supported, but have a <a href="https://github.com/aircrack-ng/rtl8188eus">third-party driver</a> that enables monitor mode.</p>
-<p>Using two of these cards together with an <a href="https://github.com/svpcom/wifibroadcast">improved version of Wifibroadcast</a>, I successfully made a connection that seemed stable at first. Sadly, I could not make smooth video streaming work at first.</p>
+<p>Using two of these cards together with an <a href="https://github.com/svpcom/wifibroadcast">improved version of Wifibroadcast</a>, I successfully made a connection that seemed stable at first. Sadly, smooth video streaming did not work initially.</p>
 <p>I then remembered that the Intel WiFi card in my laptop supports monitor mode as well. Using the internal WiFi together with the Realtek, I got an almost lag-free video stream and a bi-directional bandwidth of up to 120+ Mbit/s.</p>
 <p>For the sake of completeness, I tried to skip the Realtek card on the laptop and used only the Intel one, and weirdly, <em>this</em> finally gave me a perfectly smooth video stream.</p>
-<p>So, to sum it up: - Realtek &lt;=&gt; Realtek: *Bad - Realtek &lt;=&gt; Realtek+Intel: Almost good - Realtek &lt;=&gt; Intel: Perfect</p>
+<p>So, to sum it up:</p>
+<ul>
+<li>Realtek &lt;=&gt; Realtek: *Bad</li>
+<li>Realtek &lt;=&gt; Realtek+Intel: Almost good</li>
+<li>Realtek &lt;=&gt; Intel: Perfect</li>
+</ul>
 <p>I have no idea why, and at this point I don’t care. It works, don’t touch it.</p>
 <h2 id="legal-stuff">Legal Stuff</h2>
 <p>It wouldn’t be the European Union that we all know and love, if it didn’t have any specific rules about, well, anything. Obligatory note, don’t take anything in this article for legal advice.</p>
