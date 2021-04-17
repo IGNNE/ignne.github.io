@@ -28,6 +28,7 @@
 		  <div role="main" class="content">
 
 <h1>Scrap Drone</h1>
+<h2 id="updated-17.04.21-scroll-to-the-bottom-for-the-most-recent-flight-report">Updated 17.04.21, scroll to the bottom for the most recent flight report</h2>
 <h2 id="what-is-this">What is this?</h2>
 <p>This is my attempt to make a “drone” / RC plane / UAV from scratch. I challenged myself to build something that works with almost zero experience in building RC vehicles, let alone planes. It started as a small hobby project for a few boring weekends, but, as they usually do, things got out of hand, and I decided I might as well write it all down somewhere. So expect a lot of try and error and even more duct tape ;)</p>
 <h2 id="goals">Goals</h2>
@@ -116,6 +117,13 @@
 <li>Maybe I could move back the center of gravity.</li>
 <li>I also broke a part of the backbone in a crash, but I hope I can just glue it back on. Maybe I should reinforce that part, balsa wood is weaker than I thought.</li>
 </ul>
+<h3 id="third-flight-17.04.21">Third Flight, 17.04.21</h3>
+<p>I glued everything together, it seems to work so far. I also moved back the CG and tuned the PWM frequency and max value. I didn’t measure it, but I think I’m around 3-4 A at 5 V, which really is the limit for, well, pretty much everything. This would give me a thrust-to-weight ratio of around 60 W/kg, which should just barely be enough for a slow flyer. I also estimated the speed it needs to generate lift (by running around with it in my hand), and I think that at 10+ km/h I should be well flying.</p>
+<p>Sadly, it did not really fly. But! It almost did, and it stayed in the air for around 5 seconds! It also <del>crashed</del> landed a lot smoother. The video recording unfortunately decided not to record anything this time, maybe because my laptop had some issues. But the telemetry logging did record, so I analyzed it using the <a href="https://plot.ardupilot.org/">Ardupilot website</a> – interestingly, the <a href="https://logs.px4.io/">PX4 website</a> doesn’t take TLOG files: <img src="/images/flight3.png" style="width:80.0%"/></p>
+<p>Maybe I’m interpreting too much into it, but it clearly shows that I was not just doing an assisted crash this time. I also remember trying to pull up the nose mid-flight.</p>
+<p>I have a growing suspicion that the motor/prop I’m using is to blame for the bad performance. It does move a lot of air, and it has a static thrust of maybe around 30-50 g, but it came from a quad copter that mainly just hovered around. I don’t have any evidence, but I think the air velocity (effectiveness when in moving air? I have no idea ¯_(ツ)_/¯) is quite low. Or, to put it the other way around, the people who put it together never thought it would move at more than a few m/s. If this turns out to be true, I might have a problem.</p>
+<p>Anyway, the way forward is pretty obvious: More Power!</p>
+<p>Maybe I can chain a MOSFET after the motor driver, as some kind of ghetto Darlington circuit. Let’s see what I find in my “misc electronics” box.</p>
 <hr/>
 <p>Come back later for more updates.</p>		
 
