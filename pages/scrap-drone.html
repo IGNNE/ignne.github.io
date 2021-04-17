@@ -69,7 +69,8 @@
 <p>The rudder and elevator are made of styrofoam with shashlik skewers for stability (I totally didn’t use them to fix the rudder after stepping on it). The control surfaces are just cardboard cutouts attached by duct tape. <em>Hey, I warned you about the duct tape.</em></p>
 <p>Then I <del>stepped on the backbone and broke it in half</del> decided the plane was to big and cut it down, which also eliminated the torsion problems I had. It’s nice to solve problems like that.</p>
 <p>The controller nacelle is made of dense foamboard to protect the electronics, with the step-up regulator, AVR/motor controller (both create lots of heat) and barometer (I forgot to make some space inside) glued on top of it. It is detachable and can be moved forwards and backwards to change the center of gravity.</p>
-<p>Here is a picture before I <del>broke</del> <em>cut</em> the backbone. Sorry for the bad quality. <img src="/images/drone2.png" style="width:80.0%"/></p>
+<p>Here is a picture before I <del>broke</del> <em>cut</em> the backbone. Sorry for the bad quality.</p>
+<p><img src="/images/drone2.png" style="width:80.0%"/></p>
 <h2 id="transmitter-and-camera">Transmitter and Camera</h2>
 <p>Before I want to get into the test flights, let’s talk a bit about radios.</p>
 <p>Usually, when you build a RC vehicle, you use a dedicated receiver that talks to a remote control on the ground. Then you maybe add an analog video transmitter for your camera.</p>
@@ -108,7 +109,8 @@
 <li>After getting back home, I found out that the ailerons are seen as backwards by the controller. I should probably fix that.</li>
 </ul>
 <h3 id="second-flight-15.04.21">Second “Flight”, 15.04.21</h3>
-<p>Slightly warmer, almost no wind. This time with the barometer. Still no flying. Here, have a pretty sunset instead. <img src="/images/sunset.png" style="width:80.0%"/></p>
+<p>Slightly warmer, almost no wind. This time with the barometer. Still no flying. Here, have a pretty sunset instead.</p>
+<p><img src="/images/sunset.png" style="width:80.0%"/></p>
 <p>Anyway, a negative result is a result as well. At least I have a reason to go outside in these weird times.</p>
 <ul>
 <li>Talked to a random cyclist who used to fly RC planes himself. Some really nice advice.</li>
@@ -119,9 +121,10 @@
 </ul>
 <h3 id="third-flight-17.04.21">Third Flight, 17.04.21</h3>
 <p>I glued everything together, it seems to work so far. I also moved back the CG and tuned the PWM frequency and max value. I didn’t measure it, but I think I’m around 3-4 A at 5 V, which really is the limit for, well, pretty much everything. This would give me a thrust-to-weight ratio of around 60 W/kg, which should just barely be enough for a slow flyer. I also estimated the speed it needs to generate lift (by running around with it in my hand), and I think that at 10+ km/h I should be well flying.</p>
-<p>Sadly, it did not really fly. But! It almost did, and it stayed in the air for around 5 seconds! It also <del>crashed</del> landed a lot smoother. The video recording unfortunately decided not to record anything this time, maybe because my laptop had some issues. But the telemetry logging did record, so I analyzed it using the <a href="https://plot.ardupilot.org/">Ardupilot website</a> – interestingly, the <a href="https://logs.px4.io/">PX4 website</a> doesn’t take TLOG files: <img src="/images/flight3.png" style="width:80.0%"/></p>
+<p>Sadly, it did not really fly. But! It almost did, and it stayed in the air for around 5 seconds! It also <del>crashed</del> landed a lot smoother. The video recording unfortunately decided not to record anything this time, maybe because my laptop had some issues. But the telemetry logging did record, so I analyzed it using the <a href="https://plot.ardupilot.org/">Ardupilot website</a> – interestingly, the <a href="https://logs.px4.io/">PX4 website</a> doesn’t take TLOG files:</p>
+<p><img src="/images/flight3.png" style="width:80.0%"/></p>
 <p>Maybe I’m interpreting too much into it, but it clearly shows that I was not just doing an assisted crash this time. I also remember trying to pull up the nose mid-flight.</p>
-<p>I have a growing suspicion that the motor/prop I’m using is to blame for the bad performance. It does move a lot of air, and it has a static thrust of maybe around 30-50 g, but it came from a quad copter that mainly just hovered around. I don’t have any evidence, but I think the air velocity (effectiveness when in moving air? I have no idea ¯_(ツ)_/¯) is quite low. Or, to put it the other way around, the people who put it together never thought it would move at more than a few m/s. If this turns out to be true, I might have a problem.</p>
+<p>I have a growing suspicion that the motor/prop I’m using is to blame for the bad performance. It does move a lot of air, and it has a static thrust of maybe around 30-50 g, but it came from a quad copter that mainly just hovered around. I don’t have any evidence, but I think the air velocity (effectiveness when in moving air? I have no idea, I’m an IT/EE guy ¯\_(ツ)_/¯) is quite low. Or, to put it the other way around, the people who put it together never thought it would move at more than a few m/s. If this turns out to be true, I might have a problem.</p>
 <p>Anyway, the way forward is pretty obvious: More Power!</p>
 <p>Maybe I can chain a MOSFET after the motor driver, as some kind of ghetto Darlington circuit. Let’s see what I find in my “misc electronics” box.</p>
 <hr/>
