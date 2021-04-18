@@ -28,7 +28,7 @@
 		  <div role="main" class="content">
 
 <h1>Scrap Drone</h1>
-<h2 id="updated-17.04.21-scroll-to-the-bottom-for-the-most-recent-flight-report">Updated 17.04.21, scroll to the bottom for the most recent flight report</h2>
+<h2 id="updated-18.04.21-scroll-to-the-bottom.-mosfet-didnt-really-improve-things.">Updated 18.04.21, scroll to the bottom. MOSFET didn’t really improve things.</h2>
 <h2 id="what-is-this">What is this?</h2>
 <p>This is my attempt to make a “drone” / RC plane / UAV from scratch. I challenged myself to build something that works with almost zero experience in building RC vehicles, let alone planes. It started as a small hobby project for a few boring weekends, but, as they usually do, things got out of hand, and I decided I might as well write it all down somewhere. So expect a lot of try and error and even more duct tape ;)</p>
 <h2 id="goals">Goals</h2>
@@ -127,6 +127,7 @@
 <p>I have a growing suspicion that the motor/prop I’m using is to blame for the bad performance. It does move a lot of air, and it has a static thrust of maybe around 30-50 g, but it came from a quad copter that mainly just hovered around. I don’t have any evidence, but I think the air velocity (effectiveness when in moving air? I have no idea, I’m an IT/EE guy ¯\_(ツ)_/¯) is quite low. Or, to put it the other way around, the people who put it together never thought it would move at more than a few m/s. If this turns out to be true, I might have a problem.</p>
 <p>Anyway, the way forward is pretty obvious: More Power!</p>
 <p>Maybe I can chain a MOSFET after the motor driver, as some kind of ghetto Darlington circuit. Let’s see what I find in my “misc electronics” box.</p>
+<p>Update on the MOSFET idea: Yes, it <em>kind of</em> works. But the motor does not like 20 W. Also, whenever I plug in the motor now, my rudder and elevator servo decide to move on their own. Looks like I built an antenna. I could probably work around that, but I’m starting to lose patience with this whole powertrain. Also, the MOSFET would probably use a heat sink, and those tend to be heavy.</p>
 <hr/>
 <p>Come back later for more updates.</p>		
 
