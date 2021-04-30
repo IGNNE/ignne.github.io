@@ -28,7 +28,7 @@
 		  <div role="main" class="content">
 
 <h1>Scrap Drone</h1>
-<h2 id="updated-25.04.21-gave-up-bought-new-power-train.-also-added-some-images.">Updated 25.04.21, <a href="#adding-better-actuators">Gave up, bought new power train.</a> Also added some images.</h2>
+<h2 id="updated-30.04.21-it-flies-o">Updated 30.04.21, <a href="#fourth-flight-30.04.21">It flies! \o/</a></h2>
 <h2 id="what-is-this">What is this?</h2>
 <p>This is my attempt to make a “drone” / RC plane / UAV from scratch. I challenged myself to build something that works with almost zero experience in building RC vehicles, let alone planes. It started as a small hobby project for a few boring weekends, but, as they usually do, things got out of hand, and I decided I might as well write it all down somewhere. So expect a lot of try and error and even more duct tape ;)</p>
 <h2 id="goals">Goals</h2>
@@ -124,7 +124,7 @@
 </ul>
 <h3 id="second-flight-15.04.21">Second “Flight”, 15.04.21</h3>
 <p>Slightly warmer, almost no wind. This time with the barometer. Still no flying. Here, have a pretty sunset instead.</p>
-<p><img src="/images/sunset.png" style="width:80.0%"/></p>
+<p><img src="/images/sunset.png" style="width:70.0%"/></p>
 <p>Anyway, a negative result is a result as well. At least I have a reason to go outside in these weird times.</p>
 <ul>
 <li>Talked to a random cyclist who used to fly RC planes himself. Some really nice advice.</li>
@@ -133,15 +133,36 @@
 <li>Maybe I could move back the center of gravity.</li>
 <li>I also broke a part of the backbone in a crash, but I hope I can just glue it back on. Maybe I should reinforce that part, balsa wood is weaker than I thought.</li>
 </ul>
-<h3 id="third-flight-17.04.21">Third Flight, 17.04.21</h3>
+<h3 id="third-flight-17.04.21">Third “Flight”, 17.04.21</h3>
 <p>I glued everything together, it seems to work so far. I also moved back the CG and tuned the PWM frequency and max value. I didn’t measure it, but I think I’m around 3-4 A at 5 V, which really is the limit for, well, pretty much everything. This would give me a thrust-to-weight ratio of around 60 W/kg, which should just barely be enough for a slow flyer. I also estimated the speed it needs to generate lift (by running around with it in my hand), and I think that at 10+ km/h I should be well flying.</p>
 <p>Sadly, it did not really fly. But! It almost did, and it stayed in the air for around 5 seconds! It also <del>crashed</del> landed a lot smoother. The video recording unfortunately decided not to record anything this time, maybe because my laptop had some issues. But the telemetry logging did record, so I analyzed it using the <a href="https://plot.ardupilot.org/">Ardupilot website</a> – interestingly, the <a href="https://logs.px4.io/">PX4 website</a> doesn’t take TLOG files:</p>
-<p><img src="/images/flight3.png" style="width:80.0%"/></p>
+<p><img src="/images/flight3.png" style="width:70.0%"/></p>
 <p>Maybe I’m interpreting too much into it, but it clearly shows that I was not just doing an assisted crash this time. I also remember trying to pull up the nose mid-flight.</p>
 <p>I have a growing suspicion that the motor/prop I’m using is to blame for the bad performance. It does move a lot of air, and it has a static thrust of maybe around 30-50 g, but it came from a quad copter that mainly just hovered around. I don’t have any evidence, but I think the air velocity (effectiveness when in moving air? I have no idea, I’m an IT/EE guy ¯\_(ツ)_/¯) is quite low. Or, to put it the other way around, the people who put it together never thought it would move at more than a few m/s. If this turns out to be true, I might have a problem.</p>
 <p>Anyway, the way forward is pretty obvious: More Power!</p>
 <p>Maybe I can chain a MOSFET after the motor driver, as some kind of ghetto Darlington circuit. Let’s see what I find in my “misc electronics” box.</p>
 <p>Update on the MOSFET idea: Yes, it <em>kind of</em> works. But the motor does not like 20 W. Also, whenever I plug in the motor now, my rudder and elevator servo decide to move on their own. Looks like I built an antenna. I could probably work around that, but I’m starting to lose patience with this whole powertrain. Also, the MOSFET would probably use a heat sink, and those tend to be heavy. I decided to get a whole new powertrain, <a href="#adding-better-actuators">see here for details</a>.</p>
+<h3 id="fourth-flight-30.04.21">Fourth Flight, 30.04.21</h3>
+<p>The first flight with the new motor, and the first one I can call a flight without quotation marks!</p>
+<p><img src="/images/plane-outside.png" style="width:70.0%"/></p>
+<p>Sadly, the video recording bugged out again. For the last flight, I switched to just recording the laptop screen, but then the video <em>transmission</em> died. I guess fate doesn’t want me to show a video here, sorry. Here is the result of the screen recording:</p>
+<p><video controls="" src="/images/flug-cut.mp4" style="width:70.0%"><a href="/images/flug-cut.mp4">Video</a></video></p>
+<p>Also, the last <del>crash</del> landing of the day broke the backbone, of course right <em>behind</em> the part that I strengthened for the new motor. If any real bones ever look like the thing in the picture, go call a doctor.</p>
+<p><img src="/images/plane-broken.png" style="width:30.0%"/></p>
+<p>Apart from that minor setback, I am going to call this a partial success. It (finally) flies, but it also showed some issues:</p>
+<ul>
+<li>I made a few short flights, with the longest consisting of several rather large laps around the meadow. It obviously works.</li>
+<li>The new power train provides more than enough thrust. I think it uses about 40 W at full throttle, and the battery went from 4,1 V / cell to only around 3,9 V / cell in roughly 30 minutes of testing (in other words, lots of energy left).</li>
+<li>With all the new weight, the required airspeed to avoid stalls seems to be quite high. I don’t know how accurate the speed estimation from the IMU is, but from my gut feeling, it needs maybe 20-25 km/h to stay controllable.</li>
+<li>I borrowed an XBox controller from a friend, which works surprisingly well. I believe it would have been almost impossible to control the plane with only the touch screen controls.</li>
+<li>The plane is really hard to control without IMU stabilization. The one time that I tried to steer it in manual mode was a constant struggle to avoid crashing. I have a few theories:
+<ul>
+<li>First, the airframe is not made with high stability in mind. There are vibrations, it can twist quite a bit, and I think I need to “calibrate” the weight and drag a bit more (it constantly pulled to one side).</li>
+<li>The WifiBroadcast transmission does not work too well. I feel like everything worked better at the beginning and got worse over time, so maybe it just caught some water. But in the one partial video I could recover, you can see that the attitude updates stutter <em>a lot</em>. This, combined with the first point, makes it pretty hard to appropriately compensate for wind gusts and non-ideal weight distribution.</li>
+<li>I am not 100% happy with the IMU, too. I might have to tune the low-pass filters or something.</li>
+<li><em>By the way, did I tell you that I have never really flown an RC plane or multicopter before?</em></li>
+</ul></li>
+</ul>
 <hr/>
 <p>Come back later for more updates.</p>		
 
