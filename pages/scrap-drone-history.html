@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Scrap Drone History- IGNNE's Github Page</title>	
+	<meta name="author" content="IGNNE">
+	
+
+	<link rel="top" href="#" />
+	<link rel="stylesheet" href="../theme/css/main.css" type="text/css" />
+		
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	      <nav class="pages">
+			  <a href="../pages/scrap-drone.html">Scrap Drone</a>
+	      </nav>
+		<a href=".." class="title">IGNNE's Github Page</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>Scrap Drone History</h1>
+<p>This contains some old, obsolete or otherwise less important information that is here to show the try-and-error process of the scrap drone. For the main page about the current configuration, <a href="/pages/scrap-drone.html">click here</a>.</p>
+<h2 id="the-old-power-train">The Old Power Train</h2>
+<p>Choo choo, all aboard! Originally, I chose to use the particular AVR module (<a href="https://www.pololu.com/product/1220/resources">“Baby Orangutan B-328”</a>) because of its internal motor driver. While the motor driver is pretty weak for a drone (2x 3 A peak), it might just work for a slow flyer, or so I thought. As it turned out, it didn’t.</p>
+<p>For the motor, I originally wanted to re-use one arm of a really cheap quadrocopter that never really flew well and died pretty quickly. It is a DC motor (not any of those fancy brushless ones, we’re talking <em>cheap</em> here) and runs <del>well</del> on 1S.</p>
+<p>You can see the whole plane with the old frame and motor here:</p>
+<p><img src="/images/drone2.png" style="width:40.0%"/></p>
+<p>As you could read in the first few <a href="/pages/flightlogs.html">flight logs</a>, none of this worked.</p>
+<h3 id="power-supply-troubles">Power Supply Troubles</h3>
+<p>In order to simplify things, I originally tried to run the whole setup on a single 5 V source, provided by a step-up regulator from a 1S 900 mAh LiPo. Sensors that need 3,3 V will be powered by the RasPi, and the AVR has a sense wire going directly to the battery connector to measure the voltage.</p>
+<p>As a sidenote, this setup lead to some interesting issues with a bench power supply, because the chain of three voltage regulators (AVR regulator, step-up, bench psu) lead to a slow reaction to load changes (like instantly setting the motor from 0 to 100). This actually made the AVR run into it’s brown-out detection and reset. For some reason, I can’t re-program the fuses (low-level config bits) in the AVR, so I just decided to avoid load spikes while using the bench psu. <em>#wontfix #closed</em></p>
+<p>Because I didn’t want to admit defeat after the first failed flights, I searched for a way to increase the motor power without replacing anything. For this, I shorted the two channels of the motor driver together, which means I can get two times the current (6 A peak, 3 A continuous). Still not a lot, but better than before. The downside (beside having to do some questionable SMD soldering) is that there is now an AVR output state that would cause an interesting short circuit and probably release some of the magic smoke.</p>
+<h2 id="airframe-iterations">Airframe Iterations</h2>
+<p>For the sake of your (and my) sanity, this part will be pretty short. I really don’t know a lot about mechanical engineering, and it showed. The frame was first made of a balsa wood T-style “backbone”. This was really light, but broke a few times. You can see the original frame in the <a href="#the-old-power-train">power train part</a> or, in a more recent iteration, in the <a href="/pages/flightlogs.html">flight logs</a>. The balsa profile was really easy to twist, which didn’t contribute to the plane’s overall stability.</p>
+<p>Then I <del>stepped on the backbone and broke it in half</del> decided the plane was to big and cut it down, which also eliminated the torsion problems I had. It’s nice to solve problems like that.</p>
+<p>That later version had some reinforcements for the new motor, but still broke (right behind the reinforcements, of course). I finally gave up on balsa wood, at least for the main backbone.</p>
+<h2 id="a-tale-of-a-thousand-wifi-chips">A Tale of a Thousand WiFi Chips</h2>
+<p>This here describes in detail what doesn’t work. If you want to see what works, go back to the main page.</p>
+<p>I originally got myself a pair of TP-Link TL-WN722N V2 (Realtek RTL8188) cards, which are not really supported, but have a <a href="https://github.com/aircrack-ng/rtl8188eus">third-party driver</a> that enables monitor mode. With those, I successfully made a connection that seemed stable at first. Sadly, smooth video streaming did not work.</p>
+<p>I then remembered that the Intel wifi card in my laptop supports monitor mode as well. Using the internal wifi together with the Realtek, I got an almost lag-free video stream and a bi-directional bandwidth of up to 120+ Mbit/s. For the sake of completeness, I tried to skip the Realtek card on the laptop and used only the Intel one, and weirdly, <em>this</em> finally gave me a perfectly smooth video stream.</p>
+<p>So, to sum it up:</p>
+<ul>
+<li>Realtek &lt;=&gt; Realtek: Bad</li>
+<li>Realtek &lt;=&gt; Realtek+Intel: Almost good</li>
+<li>Realtek &lt;=&gt; Intel: Looking good</li>
+</ul>
+<p>Sadly, it only looked good. Under the hood, I got lots of packet loss and a very limited range. So I kept searching for other adaptors. The original two adaptors were really cheap, so I hoped I could get some equally cheap ones. That was where the trouble started. For some reason, companies decided to make models with the same name / number and totally different internals. My personal guess is that they feel bored and want to play tricks on you for fun. Anyway, your best friends here are angry script kiddies on Kali forums, Amazon comments and so on (wardriving needs very similar features), the various WikiDevi clones (RIP) and the FCC database (in the rare case that you can actually find a FCC id for the thing you want to buy).</p>
+<p>Here is a list of wifi cards/sticks that <strong>don’t</strong> work (well):</p>
+<ul>
+<li>TP-Link TL-WN722N V2: As explained above, not good. The V1 should work well, but you can’t really get it any more.</li>
+<li>TP-Link T4U: V1 and V2 of this stick have the RTL8812AU (good), V3.X has the RTL8812BU (bad). I had people tell me that they had the V2, but then they shipped me the V3.2, so I kind of gave up.</li>
+<li>TP Link T2U Plus: This has a RTL8821AU. Very similar name, very different behaviour. Doesn’t work at all (for our use case).</li>
+<li>Intel “Cannon Point-LP CNVi”: No injection in the 5 GHz band. Everything else is great. Thumbs up to Intel, compared to them, Realtek really shows its low price tag.</li>
+<li>Broadcom bcm43455 (or similar, no idea what really hides under the lid): Onboard chip of my RasPi. Has a fancy driver called Nexmon that will do stuff like SDR, but crashes when injecting more than a few bytes. Also requires quite some setup, and you need some other way of connecting to the RasPi. Maaaaybe I have locked myself out a couple of times.</li>
+</ul>		
+
+		  </div>	
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  <a href=https://github.com/IGNNE>IGNNE</a> 2021 - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>, and the <a href="https://ethanschoonover.com/solarized/">Solarized</a> colors.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

@@ -28,141 +28,81 @@
 		  <div role="main" class="content">
 
 <h1>Scrap Drone</h1>
-<h2 id="updated-30.04.21-it-flies-o">Updated 30.04.21, <a href="#fourth-flight-30.04.21">It flies! \o/</a></h2>
+<p><em>Updated 19.09.21, re-organized a lot of stuff and btw, fifth flight.</em></p>
 <h2 id="what-is-this">What is this?</h2>
 <p>This is my attempt to make a “drone” / RC plane / UAV from scratch. I challenged myself to build something that works with almost zero experience in building RC vehicles, let alone planes. It started as a small hobby project for a few boring weekends, but, as they usually do, things got out of hand, and I decided I might as well write it all down somewhere. So expect a lot of try and error and even more duct tape ;)</p>
+<p>On this page, you will find the current setup with a bit of background.</p>
+<p><a href="/pages/flightlogs.html">For the flight logs, click here.</a></p>
+<p><a href="/pages/scrap-drone-history.html">For the history and all previous <del>failures</del> setups, click here.</a></p>
 <h2 id="goals">Goals</h2>
 <ul>
 <li>It flies.</li>
 <li>It’s cheap and uses as many parts I already have as possible.</li>
 <li>Bonus points for video transmission and some autopilot functionality.</li>
 </ul>
+<p>Now, in September 2021, after almost one year, I can finally say that I’ve met all of those, and then some. I went down several rabbit holes, learned some things I never thought about, and overall had lots of fun. Although, I’m not sure if I would do it again; there is only so much engineering fun you can squeeze into the make part of make-or-buy, and sometimes, the journey is, in fact, less interesting than the destination.</p>
 <h2 id="making-the-electronics">Making the Electronics</h2>
+<p>Alright, let’s get started.</p>
 <h3 id="lets-pick-a-controller">Let’s Pick a Controller</h3>
 <p>After a lot of Internet, I decided to use <a href="https://px4.io/">PX4</a> as the flight controller software. The reason for that is that I did not find any cheap flight controllers that fit my needs. Since using some old 8 bit microcontroller would restrict me to obsolete software (and hey, it’s 2021!), the other hardware I’m familiar with is the Raspberry Pi. Conveniently, PX4 can run directly on the RasPi.</p>
 <p><em>But wait, isn’t that bad?! How would you run critical realtime code on a Linux OS?!1!</em></p>
 <p>Simple answer, I figured I don’t have to. I’m building a plane, not a multicopter, and planes have been flying (many still do) for decades without any fancy control loops. With a somewhat stable airframe, there is no reason why a few microseconds here and there would hurt anything. I finally settled on a RasPi 3A+, because I figured that a RasPi Zero would be too slow.</p>
 <h3 id="adding-an-imu">Adding an IMU</h3>
-<p>So, PX4 it is. A flight controller needs some data to work with, and usually the most important sensor is the intertial measurement unit (IMU). This is a fancy name for a combination of gyroscope, accelerometer and (optionally) magnetometer/compass. The IMU tells the flight controller if the plane is facing the right way, and it’s not, say, upside down and rapidly accelerating towards the ground (pro tip: avoid this situation).</p>
-<p>The good news is that PX4 supports almost every sensor and scenario out there. The bad news is that the sensor I already have (<a href="https://github.com/BoschSensortec/BNO055_driver">BNO055</a>) is not supported. Well, let’s put on our black hoodies and fingerless gloves and get hacking!</p>
+<p>So, PX4 it is. A flight controller needs some data to work with, and usually the most important sensor is the inertial measurement unit (IMU). This is a fancy name for a combination of gyroscope, accelerometer and (optionally) magnetometer/compass. The IMU tells the flight controller if the plane is facing the right way, and it’s not, say, upside down and rapidly accelerating towards the ground (pro tip: avoid this situation).</p>
+<p>The good news is that PX4 supports almost every sensor and scenario out there. The bad news is that the sensor I already have (<a href="https://github.com/BoschSensortec/BNO055_driver">BNO055</a>) is not supported. Well, let’s put on our black hoodies and fingerless gloves then and get hacking!</p>
 <p>Sadly, PX4 is pretty hard to get into, to a point where the official documentation recommends you to copy-paste an existing driver and mess with it until it works. After (way too) much time, I managed to squeeze the official Bosch driver into a <a href="https://github.com/IGNNE/PX4-Autopilot/tree/bno055-imu">PX4 Module</a>. Currently (04.21) it’s not 100% finished, but it is stable enough that I will focus on the next steps.</p>
 <h3 id="adding-some-actuators">Adding Some Actuators</h3>
-<p>Actuators are machine parts that do something. I want the plane to do something, so I probably need some actuators.</p>
-<p>I had a <a href="https://www.pololu.com/product/1220/resources">“Baby Orangutan B-328”</a> lying around. This tiny chip combines an AVR processor (the kind they use in Arduinos), a motor driver and some peripherals. The motor driver is pretty weak for a drone (2x 3 A peak), <del>but maybe this might just work for a slow flyer.</del> Edit: As it turned out, it didn’t. <a href="#adding-better-actuators">More on that here.</a></p>
+<p>Actuators are machine parts that do something. I want the plane to do something, so I’ll probably need some actuators.</p>
+<p>I had a <a href="https://www.pololu.com/product/1220/resources">“Baby Orangutan B-328”</a> lying around. This tiny chip combines an AVR processor (the kind they use in Arduinos) with quite a lot of peripherals. I originally wanted to use it as an ESC, but it didn’t work. <a href="/pages/scrap-drone-history.html#the-old-power-train">The whole story is here, if you are interested.</a></p>
 <p>Since I already have this board, I might as well put it to use for other stuff. The actuators of choice for moving control surfaces (rudder, elevator and so on) are servo motors, who are usually controlled by a PWM signal. As the AVR chip is not doing much work yet, I might as well use it as a PWM expansion board for the RasPi.</p>
-<p>And since we are on it, the RasPi has no analog inputs, but the AVR has. So I’m going to use it for measuring the battery voltage as well.</p>
+<p>And since we are on it, the RasPi has no analog inputs, but the AVR has. So I’m going to use it for measuring the battery voltage (with a simple voltage divider) as well.</p>
 <p>All those functions are implemented in <a href="https://github.com/IGNNE/rc-aux-controller">this firmware</a>, together with some bonus functions like an emergency low battery shutdown.</p>
-<p>After dealing with all the high-level mess of PX4, programming on a simple, easy 8 bit CPU feels like a vacation. Why am I doing this again? Oh, right, for fun.</p>
+<p>After previously dealing with all the high-level mess of PX4, programming on a simple, easy 8 bit CPU feels like a vacation. Why am I doing this again? Oh, right, for fun.</p>
 <p><em>Wait, I need to make a PX4 driver for this, too?</em></p>
 <p><em>Wait, I need to make like three different drivers?!</em></p>
-<p>For the motor, I originally wanted to re-use one arm of a really cheap quadrocopter that never really flew well and died pretty quickly. It was a DC motor (not any of those fancy brushless ones, we’re talking <em>cheap</em> here) and should run <del>well</del> on 1S.</p>
-<p>After a lot of trouble, I gave up on the original power train. <a href="#adding-better-actuators">The current setup is in the next section.</a></p>
-<h3 id="adding-better-actuators">Adding <em>Better</em> Actuators</h3>
-<p>As you can read in the <a href="#third-flight-17.04.21">flight logs</a>, the original power train never really flew. Instead of trying to tweak it until it might barely not crash, I lost patience and gave in to the “just buy a brushless motor lol” people. Sadly, this removes a big part of the scrap plane appeal. Oh, and it costs some money, too. But one good thing about the “throw money at problem until it goes away” approach is that I can have some other improvements, like a bigger battery to feed the power-hungry RasPi.</p>
+<h3 id="power-train-v2.0-now-with-real-power">Power Train V2.0, Now With Real Power</h3>
+<p><em>Hint: If you plan on building something similar, just get a proper ESC in the first place. Don’t be like me, just spend some money and save a few days of your lifetime.</em></p>
+<p>As you can read in the first <a href="/pages/flightlogs.html">flight logs</a>, the <a href="/pages/scrap-drone-history.html#the-old-power-train">original power train</a> never really flew. Instead of trying to tweak it until it might just barely not crash, I lost patience and gave in to the “just buy a brushless motor lol” people. Sadly, this removes a big part of the scrap plane appeal. Oh, and it costs some money, too. But one good thing about the “throw money at problem until it goes away” approach is that I can have some other improvements, like a bigger battery to feed the power-hungry RasPi.</p>
 <p>I figured to follow the old saying of “go big or go home” (well, technically, I am already home because of Covid, but.. you know what I mean). So I got a 15 A ESC with a BEC (that is how drone people call voltage regulators), a small brushless motor to turn those 15 A into rotation and a 2S 1300 mAh LiPo.</p>
 <p>One issue with this is that I didn’t look too closely at the propeller and just got the first recommended prop for this setup. So I was a bit surprised when I got a massive 9 inch one, which is way bigger than I thought (insert <em>that’s what she said</em> joke of your choice).</p>
-<p>This prop doesn’t fit on the original column (<a href="#making-the-airframe">see here for the picture</a>) mount any more, which leaves me with two options: Either replace it with a random smaller prop that I have or use this prop and re-design the prop mount. I decided to go for the latter and mount it at the very front of the airplane, for a slightly more conservative design. I went with the conventional “firewall” style mount and strengthened the front part of the backbone to withstand the additional force. While I was at it, I also reduced the wing angle of attack – I should have more than enough air flow now, and I don’t want to get in a stall and crash on my new, shiny motor.</p>
-<p><img src="/images/motor-new.png" style="width:70.0%"/></p>
+<p>This prop didn’t fit on the original mounting column any more, which leaves me with two options: Either replace it with a random smaller prop that I have, or use this prop and re-design the prop mount. I decided to go for the latter and mount it at the very front of the airplane, for a slightly more conservative design. I went with the conventional “firewall” style mount and strengthened the front part of the backbone to withstand the additional force. While I was at it, I also reduced the wing angle of attack – I should have more than enough air flow now, and I don’t want to get in a stall and crash on my new, shiny motor. Note that the picture still shows the old pure-balsa backbone.</p>
+<p><img src="/images/motor-new.png" style="width:50.0%"/></p>
 <p>I can only hope that with all the mounting troubles, it will finally produce enough thrust (again, the dirty pun is left as an exercise for the reader).</p>
-<h3 id="power-supply-troubles">Power Supply Troubles</h3>
-<p>Note that this section is pretty much obsolete, since I have <a href="#adding-better-actuators">replaced the whole power train</a>.</p>
-<p>To make things easier, I am running this whole setup on a single 5 V source, provided by a step-up regulator from an 1S 900 mAh LiPo. Sensors that need 3,3 V will be powered by the RasPi, and the AVR has a se nse wire going directly to the battery connector to measure the voltage.</p>
-<p>This setup lead to some interesting issues with a bench power supply, because the chain of three voltage regulators (AVR regulator, step-up, bench psu) lead to a slow reaction to load changes (like instantly setting the motor from 0 to 100). This actually made the AVR run into it’s brown-out detection and reset. For some reason, I can’t re-program the fuses (low-level config bits) in the AVR, so I’ll just avoid load spikes with the bench psu. <em>#wontfix #closed</em></p>
-<p>I also shorted the two channels of the motor driver together, which means I can now get two times the current (6 A peak, 3 A continuous). Still not a lot, but better than before. The downside (beside having to do some questionable SMD soldering) is that there is now an AVR output state that will cause an interesting short circuit and probably release some of the magic smoke. <em>If you plan on building something similar, just get a proper ESC in the first place. Don’t be like me, just spend some money and save a few days of your lifetime.</em></p>
 <h3 id="putting-it-all-together">Putting it all Together</h3>
 <p>I also figured I might want a barometer. The “good” PX4 sensor fusion module (ekf2) needs a height source to do its magic. Because of some delays in shipping, the first tests were made without it and with the “bad” sensor fusion module (attitude_estimator_q). I got a DPS310, which already has a PX4 driver (phew).</p>
 <p>I also noticed that putting the AVR and the IMU on the same I2C bus caused issues, despite people claiming that it shouldn’t (insert something about scheduling and work queues here). Luckily, the RasPi has a neat little trick: You can tell it to use any two GPIO pins as software I2C. I figured it would be best to give the time-critical IMU the hardware I2C and put both the AVR and the barometer on their own software I2Cs. <em>Of course</em> I had to dig into the PX4 source make it use more than one I2C bus, but hey.. it works.</p>
 <p>Here is the whole rat’s nest as a diagram, in case you made it this far:</p>
 <p><img src="/images/drone1.png" style="width:70.0%"/></p>
-<p>And here is a picture of the electronics test setup with the new ESC in place. Inside the green foam are the RasPi and the IMU, which is mounted directly to the RasPi connector.</p>
-<p><img src="/images/electronics.png" style="width:50.0%"/></p>
+<p>And here is a picture of the electronics test setup with the new ESC in place. Inside the green foam are the RasPi and the IMU, which is mounted directly to the RasPi connector. The picture is not quite up to date, but you get the general idea.</p>
+<p><img src="/images/electronics.png" style="width:40.0%"/></p>
 <h2 id="making-the-airframe">Making the Airframe</h2>
-<p>The frame is made of a balsa wood T-style “backbone”. The wing is made of styrofoam, that was cut into along the length and bent into something that resembles a Clark-Y profile if you don’t look to close. I then added a balsa wood bar for stability and wrapped the whole thing in package tape. Looking back, there are probably better ways to do this. On the other hand, package tape is cheap, and styrofoam basically costs nothing.</p>
+<p>The wing is made of styrofoam that was cut into along the length and bent into something that resembles a Clark-Y profile if you don’t look to close. I then added a balsa wood bar for stability and wrapped the whole thing in package tape. Looking back, there are probably better ways to do this. On the other hand, package tape is cheap, and styrofoam basically costs nothing.</p>
 <p>Here is the wing profile and the Clark-Y stencil I used. Close enough for me.</p>
 <p><img src="/images/wing-profile.png" style="width:20.0%"/></p>
-<p>The rudder and elevator are made of styrofoam with shashlik skewers for stability (I totally didn’t use them to fix the rudder after stepping on it). The control surfaces are just cardboard cutouts attached by duct tape. <em>Hey, I warned you about the duct tape.</em></p>
-<p>Then I <del>stepped on the backbone and broke it in half</del> decided the plane was to big and cut it down, which also eliminated the torsion problems I had. It’s nice to solve problems like that.</p>
-<p>The controller nacelle is made of dense foamboard to protect the electronics, with the step-up regulator, AVR/motor controller (both create lots of heat) and barometer (I forgot to make some space inside) glued on top of it. It is detachable and can be moved forwards and backwards to change the center of gravity.</p>
-<p>Here is a picture before I <del>broke</del> <em>cut</em> the backbone. Sorry for the bad quality.</p>
-<p><img src="/images/drone2.png" style="width:40.0%"/></p>
+<p>The rudder and elevator are made of styrofoam with shashlik skewers for stability (I totally didn’t use them to fix the rudder after stepping on it). All control surfaces are just cardboard cutouts attached by duct tape. <em>Hey, I warned you about the duct tape.</em></p>
+<p>After I gave up on balsa wood (<a href="/pages/drone-history.html#airframe-iterations">see here for the learning process</a>), I made the backbone out of a spruce bar of originally 4 cm x 2 cm, that I then cut down pretty crudely to about 2 cm x 2 cm. Then, I drilled a lot of holes in it to make it lighter. Much to my surprise, it still lasts. The tail is still on its original balsa piece (about 20 cm), which I glued to the main backbone for some extra length / leverage.</p>
+<p>The controller nacelle is made of dense foamboard to protect the electronics, with the step-up regulator, AVR/motor controller (both create lots of heat) and barometer (I forgot to make some space inside) glued on top of it. It is detachable and can be moved forwards and backwards to change the center of gravity. Because it went through a few changes, the nacelle is now mounted upside down. The biggest impact of this is that it required a lot of guesswork to find the right IMU orientation again. Also, the camera now goes on top (actually on top this time), to prevent it from hitting the dirt too much.</p>
+<p>Here is a picture of the current setup:</p>
+<p><img src="/images/newsetup.png" style="width:70.0%"/></p>
 <h2 id="transmitter-and-camera">Transmitter and Camera</h2>
 <p>Before I want to get into the test flights, let’s talk a bit about radios.</p>
 <p>Usually, when you build a RC vehicle, you use a dedicated receiver that talks to a remote control on the ground. Then you maybe add an analog video transmitter for your camera.</p>
-<p><em>We’re using none of that.</em></p>
+<p><em>We’re going to use none of that.</em></p>
 <h3 id="poor-mans-hd-radio">Poor Man’s HD Radio</h3>
-<p>Instead, what I already have is my laptop/tablet, on which I am writing this. I also have a pretty smart RasPi as a flight controller. With these two in mind, I found something called <a href="https://befinitiv.wordpress.com/wifibroadcast-analog-like-transmission-of-live-video-data/">Wifibroadcast</a>, which uses (you guessed it) WiFi cards to transmit raw data instead of all the fancy networking stuff. Since it’s just using WiFi and since I’m not touching the output limits or antennas, it <em>should</em> be as legal as a normal hotspot. I would recommend against using it near other people’s WiFis though, since it tends to kind of jam the WiFi channel it uses, and people probably won’t like that.</p>
+<p>Instead, what I already have is my laptop/tablet, on which I am writing this. I also have a pretty smart RasPi as a flight controller. With these two in mind, I found something called <a href="https://befinitiv.wordpress.com/wifibroadcast-analog-like-transmission-of-live-video-data/">Wifibroadcast</a>, which uses (you guessed it) wifi cards to transmit raw data instead of all the fancy networking stuff. Since it’s just using the regular wifi bands and since I’m not touching the output limits or antennas, it <em>should</em> be as legal as a normal hotspot. I would recommend against using it near other people’s wifis though, since it tends to kind of jam the wifi channel it uses, and people probably won’t like that.</p>
 <h3 id="fun-with-wifi-adaptors">Fun with WiFi Adaptors</h3>
-<p>I got myself a pair of TPLINK TL-WN722N V2 (Realtek RTL8188) cards, which are not really supported, but have a <a href="https://github.com/aircrack-ng/rtl8188eus">third-party driver</a> that enables monitor mode.</p>
-<p>Using two of these cards together with an <a href="https://github.com/svpcom/wifibroadcast">improved version of Wifibroadcast</a>, I successfully made a connection that seemed stable at first. Sadly, smooth video streaming did not work initially.</p>
-<p>I then remembered that the Intel WiFi card in my laptop supports monitor mode as well. Using the internal WiFi together with the Realtek, I got an almost lag-free video stream and a bi-directional bandwidth of up to 120+ Mbit/s.</p>
-<p>For the sake of completeness, I tried to skip the Realtek card on the laptop and used only the Intel one, and weirdly, <em>this</em> finally gave me a perfectly smooth video stream.</p>
-<p>So, to sum it up:</p>
-<ul>
-<li>Realtek &lt;=&gt; Realtek: Bad</li>
-<li>Realtek &lt;=&gt; Realtek+Intel: Almost good</li>
-<li>Realtek &lt;=&gt; Intel: Perfect</li>
-</ul>
-<p>I have no idea why, and at this point I don’t care. It works, don’t touch it.</p>
+<p>My current setup consists of one (way too expensive) Asus USB-AC56 RTL8812AU together with the onboard Intel wifi (RX only) on the ground, and then one Edimax EW-7811UAC (RTL8811AU) on the drone. <a href="/pages/scrap-drone-history.html#a-tale-of-a-thousand-wifi-chips">If you want to <del>laugh</del> read about my painful try-and-error, go here.</a></p>
+<p>There seems to be some undocumented <em>feature</em> with modern Intel chips that doesn’t allow packet injection in the 5 GHz band, so I <a href="https://github.com/svpcom/wifibroadcast/discussions/165">made a hack</a> for Wifibroadcast that forces it to only use the first adaptor as TX (instead of selecting the one with the highest signal strength).</p>
+<p>On the drone I decided against throwing the internal wifi into the mix, although I <a href="https://github.com/svpcom/wifibroadcast/%20discussions/133">tried out an interesting driver called Nexmon</a>. Nexmon does all kinds of fancy stuff with the Broadcom chip, but sadly, no reliable packet injection. While I could probably do the same trick I did on the ground side, I figured I might want to have some other channel for easier debugging and internet. So for now, the internal wifi will only do regular, boring home wifi.</p>
+<p>While the RTL8812AU is pretty famous with the “strange stuff with wifi” crowd, the RTL8811AU has worse receiver magic, in my case smaller antennas with less gain, and no configurable TX power. This means that the drone =&gt; laptop direction will start to drop data long before the laptop =&gt; drone will. In practice, the video will stutter before the remote control does, and I can very well live with that.</p>
+<p>I am, of course, using the <a href="https://github.com/svpcom/wifibroadcast">improved version of Wifibroadcast</a> to glue PX4 and QGroundStation together. The video comes with a hand-made, all-organic gstreamer command that gets set up during my big “init everything” script. All in all, I get a couple hundred meters of range using a (to my understanding, IANAL, see below) pretty sane interpretation of the wifi channel rules.</p>
 <h2 id="legal-stuff">Legal Stuff</h2>
 <p>It wouldn’t be the European Union that we all know and love, if it didn’t have any specific rules about, well, anything. Obligatory note, don’t take anything in this article for legal advice.</p>
 <p><em>Did you really want to take legal advice from a guy who made a plane out of duct tape?</em></p>
 <p>Surprisingly, the new EU drone law is pretty sensible and sounds like a good compromise between hobbyists, commercial drones and security concerns. <del>Because my drone is just perfectly fitting into the 250 g “free” category, I could just get flying.</del> With the new motor and battery, I am now definitely above the 250 g limit. I also want to add a <em>sensor capable of recording or transmitting personally identifiable information</em> (aka a camera), which means that I have to get a <em>bloody loicence, m8te</em> anyway.</p>
 <p>Taking the quick online test and getting a registration number was surprisingly painless – you can solve the test with some common sense alone, and when in doubt, it’s not like they prevent you from googling the answers.</p>
-<p>In general, the less legal trouble you get in, the better. So if you don’t annoy people (like on an open field far away from everything remotely important), they tend to not annoy you back.</p>
-<h2 id="test-flights">Test Flights</h2>
-<p>Here is what you are probably waiting for, <del>making fun of</del> reading about the test flights!</p>
-<h3 id="first-flight-14.04.21">First “Flight”, 14.04.21</h3>
-<p>Around 4°C, a little bit of wind. This flight was done without the barometer, using the simple sensor fusion module.</p>
-<ul>
-<li>Did not fly. Not even close.</li>
-<li>I have a feeling that there is just not enough thrust.</li>
-<li>It, ahem, landed without anything important breaking. That’s something.</li>
-<li>It’s really hard to start it when you use a pretty heavy tablet instead of a proper remote control. I think I should borrow a gamepad from a friend or something.</li>
-<li>The radio link works better outside than in the city with all the WiFi and noise (who would have thought).</li>
-<li>Gyro stabilization seems to work to some degree, it did not oscillate during its 3s of flight. It didn’t do much except crashing anyway, but it crashed in a stable way.</li>
-<li>After getting back home, I found out that the ailerons are seen as backwards by the controller. I should probably fix that.</li>
-</ul>
-<h3 id="second-flight-15.04.21">Second “Flight”, 15.04.21</h3>
-<p>Slightly warmer, almost no wind. This time with the barometer. Still no flying. Here, have a pretty sunset instead.</p>
-<p><img src="/images/sunset.png" style="width:70.0%"/></p>
-<p>Anyway, a negative result is a result as well. At least I have a reason to go outside in these weird times.</p>
-<ul>
-<li>Talked to a random cyclist who used to fly RC planes himself. Some really nice advice.</li>
-<li>I think at this point, I can’t deny that the motor is too weak any more.</li>
-<li>I’ll try to increase the maximum PWM value. I’m stretching the limits of the electronics here, but at least it will have a lot of cooling air flow :)</li>
-<li>Maybe I could move back the center of gravity.</li>
-<li>I also broke a part of the backbone in a crash, but I hope I can just glue it back on. Maybe I should reinforce that part, balsa wood is weaker than I thought.</li>
-</ul>
-<h3 id="third-flight-17.04.21">Third “Flight”, 17.04.21</h3>
-<p>I glued everything together, it seems to work so far. I also moved back the CG and tuned the PWM frequency and max value. I didn’t measure it, but I think I’m around 3-4 A at 5 V, which really is the limit for, well, pretty much everything. This would give me a thrust-to-weight ratio of around 60 W/kg, which should just barely be enough for a slow flyer. I also estimated the speed it needs to generate lift (by running around with it in my hand), and I think that at 10+ km/h I should be well flying.</p>
-<p>Sadly, it did not really fly. But! It almost did, and it stayed in the air for around 5 seconds! It also <del>crashed</del> landed a lot smoother. The video recording unfortunately decided not to record anything this time, maybe because my laptop had some issues. But the telemetry logging did record, so I analyzed it using the <a href="https://plot.ardupilot.org/">Ardupilot website</a> – interestingly, the <a href="https://logs.px4.io/">PX4 website</a> doesn’t take TLOG files:</p>
-<p><img src="/images/flight3.png" style="width:70.0%"/></p>
-<p>Maybe I’m interpreting too much into it, but it clearly shows that I was not just doing an assisted crash this time. I also remember trying to pull up the nose mid-flight.</p>
-<p>I have a growing suspicion that the motor/prop I’m using is to blame for the bad performance. It does move a lot of air, and it has a static thrust of maybe around 30-50 g, but it came from a quad copter that mainly just hovered around. I don’t have any evidence, but I think the air velocity (effectiveness when in moving air? I have no idea, I’m an IT/EE guy ¯\_(ツ)_/¯) is quite low. Or, to put it the other way around, the people who put it together never thought it would move at more than a few m/s. If this turns out to be true, I might have a problem.</p>
-<p>Anyway, the way forward is pretty obvious: More Power!</p>
-<p>Maybe I can chain a MOSFET after the motor driver, as some kind of ghetto Darlington circuit. Let’s see what I find in my “misc electronics” box.</p>
-<p>Update on the MOSFET idea: Yes, it <em>kind of</em> works. But the motor does not like 20 W. Also, whenever I plug in the motor now, my rudder and elevator servo decide to move on their own. Looks like I built an antenna. I could probably work around that, but I’m starting to lose patience with this whole powertrain. Also, the MOSFET would probably use a heat sink, and those tend to be heavy. I decided to get a whole new powertrain, <a href="#adding-better-actuators">see here for details</a>.</p>
-<h3 id="fourth-flight-30.04.21">Fourth Flight, 30.04.21</h3>
-<p>The first flight with the new motor, and the first one I can call a flight without quotation marks!</p>
-<p><img src="/images/plane-outside.png" style="width:70.0%"/></p>
-<p>Sadly, the video recording bugged out again. For the last flight, I switched to just recording the laptop screen, but then the video <em>transmission</em> died. I guess fate doesn’t want me to show a video here, sorry. Here is the result of the screen recording:</p>
-<p><video controls="" src="/images/flug-cut.mp4" style="width:70.0%"><a href="/images/flug-cut.mp4">Video</a></video></p>
-<p>Also, the last <del>crash</del> landing of the day broke the backbone, of course right <em>behind</em> the part that I strengthened for the new motor. If any real bones ever look like the thing in the picture, go call a doctor.</p>
-<p><img src="/images/plane-broken.png" style="width:30.0%"/></p>
-<p>Apart from that minor setback, I am going to call this a partial success. It (finally) flies, but it also showed some issues:</p>
-<ul>
-<li>I made a few short flights, with the longest consisting of several rather large laps around the meadow. It obviously works.</li>
-<li>The new power train provides more than enough thrust. I think it uses about 40 W at full throttle, and the battery went from 4,1 V / cell to only around 3,9 V / cell in roughly 30 minutes of testing (in other words, lots of energy left).</li>
-<li>With all the new weight, the required airspeed to avoid stalls seems to be quite high. I don’t know how accurate the speed estimation from the IMU is, but from my gut feeling, it needs maybe 20-25 km/h to stay controllable.</li>
-<li>I borrowed an XBox controller from a friend, which works surprisingly well. I believe it would have been almost impossible to control the plane with only the touch screen controls.</li>
-<li>The plane is really hard to control without IMU stabilization. The one time that I tried to steer it in manual mode was a constant struggle to avoid crashing. I have a few theories:
-<ul>
-<li>First, the airframe is not made with high stability in mind. There are vibrations, it can twist quite a bit, and I think I need to “calibrate” the weight and drag a bit more (it constantly pulled to one side).</li>
-<li>The WifiBroadcast transmission does not work too well. I feel like everything worked better at the beginning and got worse over time, so maybe it just caught some water. But in the one partial video I could recover, you can see that the attitude updates stutter <em>a lot</em>. This, combined with the first point, makes it pretty hard to appropriately compensate for wind gusts and non-ideal weight distribution.</li>
-<li>I am not 100% happy with the IMU, too. I might have to tune the low-pass filters or something.</li>
-<li><em>By the way, did I tell you that I have never really flown an RC plane or multicopter before?</em></li>
-</ul></li>
-</ul>
+<p>On the wifi end, I am using channel 161. Digging through the EU regulation, I found an official-looking page that basically told me that on that frequency, I have to stay below 25 mW EIRP and that’s it. To date, no angry radar operators have shown up. I know my home wifi router complains about weather radar kicking him off the air some times, but they tend to be on a different band. The biggest impact probably comes from the drone video stream anyway, and that tiny Edimax stick doesn’t have a lot of power to begin with. Anyway, do your own reading and use what looks the least criminal to you.</p>
+<p>In general, the less trouble you get in, the better. So if you don’t annoy people (like on an open field far away from everything remotely important), they tend to not annoy you back.</p>
 <hr/>
 <p>Come back later for more updates.</p>		
 
