@@ -6,7 +6,7 @@
 	<meta name="author" content="IGNNE">
 	
 
-	<meta name="description" content="This contains some old, obsolete or otherwise less important information that is here to show the try-and-error process of the scrap drone, or might be of some entertainment value. For the main page about the current configuration, click here. The Old Power Train Choo choo, all aboard! Originally, I chose …">
+	<meta name="description" content="This contains some old, obsolete or otherwise less important information that is here to show the try-and-error process of the scrap drone, or might be of some entertainment value. The Old Power Train Choo choo, all aboard! Originally, I chose to use the particular AVR module (“Baby Orangutan B-328”) because …">
 
 
 	<link rel="top" href="#" />
@@ -39,19 +39,19 @@
     </address>
   in <a href="./category/scrap-drone.html">Scrap Drone</a>
 </div>		
-		<p>This contains some old, obsolete or otherwise less important information that is here to show the try-and-error process of the scrap drone, or might be of some entertainment value. For the main page about the current configuration, <a href="/pages/scrap-drone.html">click here</a>.</p>
+		<p>This contains some old, obsolete or otherwise less important information that is here to show the try-and-error process of the scrap drone, or might be of some entertainment value.</p>
 <h2 id="the-old-power-train">The Old Power Train</h2>
 <p>Choo choo, all aboard! Originally, I chose to use the particular AVR module (<a href="https://www.pololu.com/product/1220/resources">“Baby Orangutan B-328”</a>) because of its internal motor driver. While the motor driver is pretty weak for a drone (2x 3 A peak), it might just work for a slow flyer, or so I thought. As it turned out, it didn’t.</p>
 <p>For the motor, I originally wanted to re-use one arm of a really cheap quadrocopter that never really flew well and died pretty quickly. It is a DC motor (not any of those fancy brushless ones, we’re talking <em>cheap</em> here) and runs <del>well</del> on 1S.</p>
 <p>You can see the whole plane with the old frame and motor here:</p>
 <p><img src="/images/drone2.png" style="width:40.0%"/></p>
-<p>As you could read in the first few <a href="/pages/flightlogs.html">flight logs</a>, none of this worked.</p>
+<p>As you could read in the first few <a href="/category/drone-flight-logs.html">flight logs</a>, none of this worked.</p>
 <h3 id="power-supply-troubles">Power Supply Troubles</h3>
 <p>In order to simplify things, I originally tried to run the whole setup on a single 5 V source, provided by a step-up regulator from a 1S 900 mAh LiPo. Sensors that need 3,3 V will be powered by the RasPi, and the AVR has a sense wire going directly to the battery connector to measure the voltage.</p>
 <p>As a sidenote, this setup lead to some interesting issues with a bench power supply, because the chain of three voltage regulators (AVR regulator, step-up, bench psu) lead to a slow reaction to load changes (like instantly setting the motor from 0 to 100). This actually made the AVR run into it’s brown-out detection and reset. For some reason, I can’t re-program the fuses (low-level config bits) in the AVR, so I just decided to avoid load spikes while using the bench psu. <em>#wontfix #closed</em></p>
 <p>Because I didn’t want to admit defeat after the first failed flights, I searched for a way to increase the motor power without replacing anything. For this, I shorted the two channels of the motor driver together, which means I can get two times the current (6 A peak, 3 A continuous). Still not a lot, but better than before. The downside (beside having to do some questionable SMD soldering) is that there is now an AVR output state that would cause an interesting short circuit and probably release some of the magic smoke.</p>
 <h2 id="airframe-iterations">Airframe Iterations</h2>
-<p>For the sake of your (and my) sanity, this part will be pretty short. I really don’t know a lot about mechanical engineering, and it showed. The frame was first made of a balsa wood T-style “backbone”. This was really light, but broke a few times. You can see the original frame in the <a href="#the-old-power-train">power train part</a> or, in a more recent iteration, in the <a href="/pages/flightlogs.html">flight logs</a>. The balsa profile was really easy to twist, which didn’t contribute to the plane’s overall stability.</p>
+<p>For the sake of your (and my) sanity, this part will be pretty short. I really don’t know a lot about mechanical engineering, and it showed. The frame was first made of a balsa wood T-style “backbone”. This was really light, but broke a few times. You can see the original frame in the <a href="#the-old-power-train">power train part</a> or, in a more recent iteration, in the <a href="/category/drone-flight-logs.html">flight logs</a>. The balsa profile was really easy to twist, which didn’t contribute to the plane’s overall stability.</p>
 <p>Then I <del>stepped on the backbone and broke it in half</del> decided the plane was to big and cut it down, which also eliminated the torsion problems I had. It’s nice to solve problems like that.</p>
 <p>That later version had some reinforcements for the new motor, but still broke (right behind the reinforcements, of course). I finally gave up on balsa wood, at least for the main backbone.</p>
 <h2 id="a-tale-of-a-thousand-wifi-chips">A Tale of a Thousand WiFi Chips</h2>
