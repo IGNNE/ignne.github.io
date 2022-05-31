@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Ikea Sensor - IGNNE's Github Page - Home</title>	
+	<meta name="author" content="IGNNE">
+	
+
+	<meta name="description" content="Here is how it now looks like, ‘AA’ type battery for scale: Ikea has this surprisingly cheap, somewhat accurate and quite living-room-compatible sensor called VINDRIKTNING. In its current state, it displays the particulate matter concentration in a traffic light style display. Of course, lots of people started to pry it …">
+
+
+	<link rel="top" href="#" />
+	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
+		
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	      <nav class="pages">
+	      </nav>
+		<a href="." class="title">IGNNE's Github Page - Home</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>Ikea Sensor</h1>
+		
+<div class="metadata">
+  <time datetime="2022-05-31T00:00:00+02:00" pubdate>Tue 31 May 2022</time>
+    <address class="vcard author">
+      by <a class="url fn" href="./author/ignne.html">IGNNE</a>
+    </address>
+  in <a href="./category/smart-home.html">Smart Home</a>
+</div>		
+		<p>Here is how it now looks like, ‘AA’ type battery for scale:</p>
+<p><img src="/images/ikeasensor.png" style="width:30.0%"/></p>
+<p>Ikea has this surprisingly cheap, somewhat accurate and quite living-room-compatible sensor called <a href="https://www.ikea.com/de/de/p/vindriktning-luftqualitaetssensor-70498242/">VINDRIKTNING</a>. In its current state, it displays the particulate matter concentration in a traffic light style display. Of course, lots of people started to pry it open immediately, and tried to make it smarter, using an ESP microcontroller or similar.</p>
+<p>I went one step further, and added a <a href="https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors/bme680/">Bosch BME680</a> air quality sensor (measuring temp, humidity, pressure and <a href="https://en.wikipedia.org/wiki/Volatile_organic_compound">VOC</a>). As an added bonus, I threw in a second multi-color LED to show the computed IAQ from the BME680.</p>
+<p>Hardware-wise, I just crammed an ESP8266 and the BME680 breakout in there and connected everything. I did not bother with any sophisticated ways to generate the 3.3 V for the ESP, I just soldered two diodes in series and hooked it up to 5 V. Not exactly the right way™, but it drops the voltage for the ESP down to around 3.5 V, and it has been running without issues for some months now.</p>
+<p>Then, I drilled a hole in the front and glued the additional LED in, which is controlled by the ESP. I chose some random three-pin multicolor LED I found in my random parts box. It has one common pin, one for red, one for green, and if you power both, you get something yellow-ish. Likewise, I did not bother with current limiting, and so far, nothing went up in flames. Not sure if the LED has internal resistors or if the GPIOs are somewhat current limited, but it seems to work for now.</p>
+<p>For the software, I have switched from something home-made to the great <a href="https://esphome.io/">ESPHome</a>, which now brings support for the official closed-source Bosch library. <a href="ikea-sensor-esphome-code.html">Code is here</a>. All the values get reported to my MQTT server and are displayed on <a href="https://www.home-assistant.io/">Home Assistant</a>. A word of warning though, having the sensor in the same enclosure with all the other stuff will influence the temperature readings. I recommend running your sensor for a bit until everything is warmed up, and then calibrating the offset with a known-good thermometer. <img src="/images/ikea-hass.png" style="width:30.0%"/></p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>
+		  		  
+		  <div class="sidebar">
+
+			<aside>
+			  <h2>Projects</h2>
+			  <ul>
+				  <li><a href="/pages/the-scrap-drone.html">The Scrap Drone</a></li>
+				  <li><a href="/ikea-sensor.html">Ikea VINDRIKTNING Sensor Upgrades</a></li>
+			  </ul>
+			</aside>
+
+	        <nav>
+	          <h2>Articles by Category</h2>
+	          <ul>
+	              <li ><a href="./category/drone-flight-logs.html">Drone Flight Logs</a></li>
+	              <li ><a href="./category/scrap-drone.html">Scrap Drone</a></li>
+	              <li class="active"><a href="./category/smart-home.html">Smart Home</a></li>
+	          </ul>
+	        </nav>
+
+
+		  </div>
+
+	
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  <a href=https://github.com/IGNNE>IGNNE</a> 2021 - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>, and the <a href="https://ethanschoonover.com/solarized/">Solarized</a> colors.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

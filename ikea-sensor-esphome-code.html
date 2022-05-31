@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Ikea Sensor ESPHome Code - IGNNE's Github Page - Home</title>	
+	<meta name="author" content="IGNNE">
+	
+
+	<meta name="description" content="Yaml code for the Ikea Sensor, copy (and edit) here: esphome: name: multisensor platform: ESP8266 board: esp_wroom_02 wifi: networks: - ssid: "WlanGoesHere" password: "YouWish123" - ssid: "AnotherWLAN" password: "topsecret" # Enable fallback hotspot (captive portal) in case wifi connection fails ap: ssid: "Sensor Fallback Hotspot" password: "Nope, not for you" captive_portal: # Enable logging …">
+
+
+	<link rel="top" href="#" />
+	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
+		
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	      <nav class="pages">
+	      </nav>
+		<a href="." class="title">IGNNE's Github Page - Home</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>Ikea Sensor ESPHome Code</h1>
+		
+<div class="metadata">
+  <time datetime="2022-05-31T00:00:00+02:00" pubdate>Tue 31 May 2022</time>
+    <address class="vcard author">
+      by <a class="url fn" href="./author/ignne.html">IGNNE</a>
+    </address>
+  in <a href="./category/smart-home.html">Smart Home</a>
+</div>		
+		<p>Yaml code for the Ikea Sensor, copy (and edit) here:</p>
+<hr/>
+<pre><code>esphome:
+  name: multisensor
+  platform: ESP8266
+  board: esp_wroom_02
+
+wifi:
+  networks:
+  - ssid: "WlanGoesHere"
+    password: "YouWish123"
+  - ssid: "AnotherWLAN"
+    password: "topsecret"    
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Sensor Fallback Hotspot"
+    password: "Nope, not for you"
+captive_portal:
+
+# Enable logging
+logger:
+
+mqtt:
+  broker: broker-hostname-goes-here
+  discovery: True
+  
+ota:
+  password: "topsecret42"
+
+# for bme
+i2c:
+  sda: 14
+  scl: 12
+  scan: true
+  frequency: 400kHz
+
+bme680_bsec:
+    address: 0x77
+    temperature_offset: 3
+    iaq_mode: static
+    sample_rate: lp
+    state_save_interval: 6h
+    
+# for PM2.5
+uart:
+  rx_pin: 4
+  baud_rate: 9600
+
+sensor:
+  - platform: pm1006
+    pm_2_5:
+      name: "Ikea PM 2.5"
+      filters:
+      - median:
+          window_size: 9
+          send_every: 9
+          send_first_at: 9
+
+  - platform: bme680_bsec
+    temperature:
+      # Temperature in °C
+      name: "BME680 Temperature"
+      sample_rate: lp
+      filters:
+        - median
+    pressure:
+      # Pressure in hPa
+      name: "BME680 Pressure"
+      sample_rate: lp
+      filters:
+        - median
+    humidity:
+      # Relative humidity %
+      name: "BME680 Humidity"
+      sample_rate: lp
+      filters:
+        - median
+    iaq:
+      # Indoor air quality value
+      name: "BME680 IAQ"
+      filters:
+        - median
+      # this controls the second led
+      on_value_range:
+        - below: 50
+          then:
+            - output.turn_on: green_led
+            - output.turn_off: red_led
+        - above: 50
+          below: 125
+          then:
+            - output.turn_on: green_led
+            - output.turn_on: red_led
+        - above: 125
+          then:
+            - output.turn_on: red_led
+            - output.turn_off: green_led
+
+    iaq_accuracy:
+      # IAQ accuracy as a numeric value of 0, 1, 2, 3
+      name: "BME680 Numeric IAQ Accuracy"
+    co2_equivalent:
+      # CO2 equivalent estimate in ppm
+      name: "BME680 CO2 Equivalent"
+      filters:
+        - median
+    breath_voc_equivalent:
+      # Volatile organic compounds equivalent estimate in ppm
+      name: "BME680 Breath VOC Equivalent"
+      filters:
+        - median
+
+# pin config for the second led
+output:
+  - id: red_led
+    platform: gpio
+    pin: GPIO16
+  - id: green_led
+    platform: gpio
+    pin: GPIO5</code></pre>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>
+		  		  
+		  <div class="sidebar">
+
+			<aside>
+			  <h2>Projects</h2>
+			  <ul>
+				  <li><a href="/pages/the-scrap-drone.html">The Scrap Drone</a></li>
+				  <li><a href="/ikea-sensor.html">Ikea VINDRIKTNING Sensor Upgrades</a></li>
+			  </ul>
+			</aside>
+
+	        <nav>
+	          <h2>Articles by Category</h2>
+	          <ul>
+	              <li ><a href="./category/drone-flight-logs.html">Drone Flight Logs</a></li>
+	              <li ><a href="./category/scrap-drone.html">Scrap Drone</a></li>
+	              <li class="active"><a href="./category/smart-home.html">Smart Home</a></li>
+	          </ul>
+	        </nav>
+
+
+		  </div>
+
+	
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  <a href=https://github.com/IGNNE>IGNNE</a> 2021 - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>, and the <a href="https://ethanschoonover.com/solarized/">Solarized</a> colors.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Fourth Flight - IGNNE's Github Page - Home</title>	
+	<meta name="author" content="IGNNE">
+	
+
+	<meta name="description" content="The first flight with the new motor, and the first one I can call a flight without quotation marks! Sadly, the video recording bugged out again. For the last flight, I switched to just recording the laptop screen, but then the video transmission died. I guess fate doesn’t want …">
+
+
+	<link rel="top" href="#" />
+	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
+		
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	      <nav class="pages">
+	      </nav>
+		<a href="." class="title">IGNNE's Github Page - Home</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>Fourth Flight</h1>
+		
+<div class="metadata">
+  <time datetime="2021-04-30T00:00:00+02:00" pubdate>Fri 30 April 2021</time>
+    <address class="vcard author">
+      by <a class="url fn" href="./author/ignne.html">IGNNE</a>
+    </address>
+  in <a href="./category/drone-flight-logs.html">Drone Flight Logs</a>
+</div>		
+		<p>The first flight with the new motor, and the first one I can call a flight without quotation marks!</p>
+<p><img src="/images/plane-outside.png" style="width:70.0%"/></p>
+<p>Sadly, the video recording bugged out again. For the last flight, I switched to just recording the laptop screen, but then the video <em>transmission</em> died. I guess fate doesn’t want me to show a video here, sorry. Here is the result of the screen recording:</p>
+<p><video controls="" src="/images/flug-cut.mp4" style="width:70.0%"><a href="/images/flug-cut.mp4">Video</a></video></p>
+<p>Also, the last <del>crash</del> landing of the day broke the backbone, of course right <em>behind</em> the part that I strengthened for the new motor. If any real bones ever look like the thing in the picture, go call a doctor.</p>
+<p><img src="/images/plane-broken.png" style="width:30.0%"/></p>
+<p>Apart from that minor setback, I am going to call this a partial success. It (finally) flies, but it also showed some issues:</p>
+<ul>
+<li>I made a few short flights, with the longest consisting of several rather large laps around the meadow. It obviously works.</li>
+<li>The new power train provides more than enough thrust. I think it uses about 40 W at full throttle, and the battery went from 4,1 V / cell to only around 3,9 V / cell in roughly 30 minutes of testing (in other words, lots of energy left).</li>
+<li>With all the new weight, the required airspeed to avoid stalls seems to be quite high. I don’t know how accurate the speed estimation from the IMU is, but from my gut feeling, it needs maybe 20-25 km/h to stay controllable.</li>
+<li>I borrowed an XBox controller from a friend, which works surprisingly well. I believe it would have been almost impossible to control the plane with only the touch screen controls.</li>
+<li>The plane is really hard to control without IMU stabilization. The one time that I tried to steer it in manual mode was a constant struggle to avoid crashing. I have a few theories:</li>
+<li>First, the airframe is not made with high stability in mind. There are vibrations, it can twist quite a bit, and I think I need to “calibrate” the weight and drag a bit more (it constantly pulled to one side).</li>
+<li>The WifiBroadcast transmission does not work too well. I feel like everything worked better at the beginning and got worse over time, so maybe it just caught some water. But in the one partial video I could recover, you can see that the attitude updates stutter <em>a lot</em>. This, combined with the first point, makes it pretty hard to appropriately compensate for wind gusts and non-ideal weight distribution.</li>
+<li>I am not 100% happy with the IMU, too. I might have to tune the low-pass filters or something.</li>
+<li><em>By the way, did I tell you that I have never really flown an RC plane or multicopter before?</em></li>
+</ul>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>
+		  		  
+		  <div class="sidebar">
+
+			<aside>
+			  <h2>Projects</h2>
+			  <ul>
+				  <li><a href="/pages/the-scrap-drone.html">The Scrap Drone</a></li>
+				  <li><a href="/ikea-sensor.html">Ikea VINDRIKTNING Sensor Upgrades</a></li>
+			  </ul>
+			</aside>
+
+	        <nav>
+	          <h2>Articles by Category</h2>
+	          <ul>
+	              <li class="active"><a href="./category/drone-flight-logs.html">Drone Flight Logs</a></li>
+	              <li ><a href="./category/scrap-drone.html">Scrap Drone</a></li>
+	              <li ><a href="./category/smart-home.html">Smart Home</a></li>
+	          </ul>
+	        </nav>
+
+
+		  </div>
+
+	
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  <a href=https://github.com/IGNNE>IGNNE</a> 2021 - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>, and the <a href="https://ethanschoonover.com/solarized/">Solarized</a> colors.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

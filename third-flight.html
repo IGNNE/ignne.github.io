@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Third ‘Flight’ - IGNNE's Github Page - Home</title>	
+	<meta name="author" content="IGNNE">
+	
+
+	<meta name="description" content="I glued everything together, it seems to work so far. I also moved back the CG and tuned the PWM frequency and max value. I didn’t measure it, but I think I’m around 3-4 A at 5 V, which really is the limit for, well, pretty much everything …">
+
+
+	<link rel="top" href="#" />
+	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
+		
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	      <nav class="pages">
+	      </nav>
+		<a href="." class="title">IGNNE's Github Page - Home</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>Third ‘Flight’</h1>
+		
+<div class="metadata">
+  <time datetime="2021-04-17T00:00:00+02:00" pubdate>Sat 17 April 2021</time>
+    <address class="vcard author">
+      by <a class="url fn" href="./author/ignne.html">IGNNE</a>
+    </address>
+  in <a href="./category/drone-flight-logs.html">Drone Flight Logs</a>
+</div>		
+		<p>I glued everything together, it seems to work so far. I also moved back the CG and tuned the PWM frequency and max value. I didn’t measure it, but I think I’m around 3-4 A at 5 V, which really is the limit for, well, pretty much everything. This would give me a thrust-to-weight ratio of around 60 W/kg, which should just barely be enough for a slow flyer. I also estimated the speed it needs to generate lift (by running around with the plane in my hand), and I think that at 10+ km/h I should be well flying.</p>
+<p>Sadly, it did not really fly. But! It almost did, and it stayed in the air for around 5 seconds! It also <del>crashed</del> landed a lot smoother. The video recording unfortunately decided not to record anything this time, maybe because my laptop had some issues. But the telemetry logging did record, so I analyzed it using the <a href="https://plot.ardupilot.org/">Ardupilot website</a> – interestingly, the <a href="https://logs.px4.io/">PX4 website</a> doesn’t take TLOG files:</p>
+<p><img src="/images/flight3.png" style="width:70.0%"/></p>
+<p>Maybe I’m interpreting too much into it, but it clearly shows that I was not just doing an assisted crash this time. I also remember trying to pull up the nose mid-flight.</p>
+<p>I have a growing suspicion that the motor/prop I’m using is to blame for the bad performance. It does move a lot of air, and it has a static thrust of maybe around 30-50 g, but it came from a quad copter that mainly just hovered around. I don’t have any evidence, but I think the air velocity (effectiveness when in moving air? I have no idea, I’m an IT/EE guy ¯\_(ツ)_/¯) is quite low. Or, to put it the other way around, the people who put it together never thought it would move at more than a few m/s. If this turns out to be true, I might have a problem.</p>
+<p>Anyway, the way forward is pretty obvious: More Power!</p>
+<p>Maybe I can chain a MOSFET after the motor driver, as some kind of ghetto Darlington circuit. Let’s see what I find in my “misc electronics” box.</p>
+<p>Update on the MOSFET idea: Yes, it <em>kind of</em> works. But the motor does not like 20 W. Also, whenever I plug in the motor now, my rudder and elevator servo decide to move on their own. Looks like I built an antenna. I could probably work around that, but I’m starting to lose patience with this whole powertrain. Also, the MOSFET would probably use a heat sink, and those tend to be heavy. I decided to get a whole new powertrain, <a href="#adding-better-actuators">see here for details</a>.</p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>
+		  		  
+		  <div class="sidebar">
+
+			<aside>
+			  <h2>Projects</h2>
+			  <ul>
+				  <li><a href="/pages/the-scrap-drone.html">The Scrap Drone</a></li>
+				  <li><a href="/ikea-sensor.html">Ikea VINDRIKTNING Sensor Upgrades</a></li>
+			  </ul>
+			</aside>
+
+	        <nav>
+	          <h2>Articles by Category</h2>
+	          <ul>
+	              <li class="active"><a href="./category/drone-flight-logs.html">Drone Flight Logs</a></li>
+	              <li ><a href="./category/scrap-drone.html">Scrap Drone</a></li>
+	              <li ><a href="./category/smart-home.html">Smart Home</a></li>
+	          </ul>
+	        </nav>
+
+
+		  </div>
+
+	
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  <a href=https://github.com/IGNNE>IGNNE</a> 2021 - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>, and the <a href="https://ethanschoonover.com/solarized/">Solarized</a> colors.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

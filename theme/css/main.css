@@ -1,5 +1,5 @@
 /*
- Solarized is the best color scheme, change my mind
+ Solarized is the best color scheme, fight me, 1v1 on dust2
 $ase03:     #002b36;
 $base02:    #073642;
 $base01:    #586e75;
@@ -47,10 +47,13 @@ body {
 }
 
 header {
-  background-color: #073642;
+  /*background-color: #073642;*/
   height: 50px;
   line-height: 50px;
   padding: 0 0;
+  border-left: 1px dotted #073642;
+  border-right: 1px dotted #073642;
+  border-bottom: 1px dotted #073642;
 }
 
 .wrapper {
@@ -60,7 +63,7 @@ header {
 
 .content {
   display: table-cell;
-  border-left: 1px solid #073642;
+  border-left: 1px dotted #073642;
   border-right: 1px dotted #073642;
   padding: 0 20px 1em 20px;
 }
@@ -68,7 +71,7 @@ header {
 .sidebar {
   display: table-cell;
   width: 25%;
-  border-right: 1px solid #073642;
+  border-right: 1px dotted #073642;
   padding: 0 20px 1em 20px;
 }
 
@@ -83,13 +86,21 @@ footer {
 /* Header */
 
 header a {
-  color: #93a1a1;
+  /*color: #93a1a1;*/
   border-bottom: none;
   padding: 1em;
+  color: #586e75;
+}
+
+header a:hover, a:active {
+  text-decoration: none;
+  border-bottom: none;
+  color: #268bd2;
 }
 
 header a.title {
-  font-size: 1.25em;
+  font-size: 1.5em;
+  font-weight: 700;
 }
 
 header .feeds {
@@ -152,12 +163,12 @@ p {
 a {
   text-decoration: none;
   border-bottom: 1px dotted #073642;
-  color: #586e75;
+  color: #268bd2;
 }
 
 a:hover, a:active {
   text-decoration: none;
-  border-bottom: 1px dotted #268bd2;
+  border-bottom: 1px solid #268bd2;
   color: #268bd2;
 }
 

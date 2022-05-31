@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Smart Home - IGNNE's Github Page - Home</title>	
+	<meta name="author" content="IGNNE">
+	
+
+	<link rel="top" href="#" />
+	<link rel="stylesheet" href="../theme/css/main.css" type="text/css" />
+		
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	      <nav class="pages">
+	      </nav>
+		<a href=".." class="title">IGNNE's Github Page - Home</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>Posts categorized under: Smart Home</h1>
+
+<article class="summary">
+<div class="metadata">
+  <time datetime="2022-05-31T00:00:00+02:00" pubdate>Tue 31 May 2022</time>
+    <address class="vcard author">
+      by <a class="url fn" href="../author/ignne.html">IGNNE</a>
+    </address>
+  in <a href="../category/smart-home.html">Smart Home</a>
+</div>  <div>
+    <h2>
+      <a href="../ikea-sensor.html" rel="bookmark" title="Permalink to Ikea Sensor">Ikea Sensor</a>
+    </h2>
+    <p><p>Here is how it now looks like, ‘AA’ type battery for scale:</p>
+<p><img src="/images/ikeasensor.png" style="width:30.0%"/></p>
+<p>Ikea has this surprisingly cheap, somewhat accurate and quite living-room-compatible sensor called <a href="https://www.ikea.com/de/de/p/vindriktning-luftqualitaetssensor-70498242/">VINDRIKTNING</a>. In its current state, it displays the particulate matter concentration in a traffic light style display. Of course, lots of people started to pry it …</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2022-05-31T00:00:00+02:00" pubdate>Tue 31 May 2022</time>
+    <address class="vcard author">
+      by <a class="url fn" href="../author/ignne.html">IGNNE</a>
+    </address>
+  in <a href="../category/smart-home.html">Smart Home</a>
+</div>  <div>
+    <h2>
+      <a href="../ikea-sensor-esphome-code.html" rel="bookmark" title="Permalink to Ikea Sensor ESPHome Code">Ikea Sensor ESPHome Code</a>
+    </h2>
+    <p><p>Yaml code for the Ikea Sensor, copy (and edit) here:</p>
+<hr/>
+<pre><code>esphome:
+  name: multisensor
+  platform: ESP8266
+  board: esp_wroom_02
+
+wifi:
+  networks:
+  - ssid: "WlanGoesHere"
+    password: "YouWish123"
+  - ssid: "AnotherWLAN"
+    password: "topsecret"    
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Sensor Fallback Hotspot"
+    password: "Nope, not for you"
+captive_portal:
+
+# Enable logging …</code></pre></p>
+  </div>
+</article>
+
+		  </div>
+		  		  
+		  <div class="sidebar">
+
+			<aside>
+			  <h2>Projects</h2>
+			  <ul>
+				  <li><a href="/pages/the-scrap-drone.html">The Scrap Drone</a></li>
+				  <li><a href="/ikea-sensor.html">Ikea VINDRIKTNING Sensor Upgrades</a></li>
+			  </ul>
+			</aside>
+
+	        <nav>
+	          <h2>Articles by Category</h2>
+	          <ul>
+	              <li ><a href="../category/drone-flight-logs.html">Drone Flight Logs</a></li>
+	              <li ><a href="../category/scrap-drone.html">Scrap Drone</a></li>
+	              <li class="active"><a href="../category/smart-home.html">Smart Home</a></li>
+	          </ul>
+	        </nav>
+
+
+		  </div>
+
+	
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  <a href=https://github.com/IGNNE>IGNNE</a> 2021 - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>, and the <a href="https://ethanschoonover.com/solarized/">Solarized</a> colors.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>
