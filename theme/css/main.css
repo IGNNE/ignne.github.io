@@ -304,7 +304,7 @@ $green:     #859900;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 570px) {
   body {
     margin: 0 0%;
     min-width: 125vw;
