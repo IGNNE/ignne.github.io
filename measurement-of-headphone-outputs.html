@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Measurement of Headphone Outputs - IGNNE's Github Page - Home</title>	
+	<meta name="author" content="IGNNE">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+
+	<meta name="description" content="Introduction For various reasons, I own a couple of very different audio / headphone outputs (“ADCs”). After one evening, where I dove too deep into the rabbit hole of audio quality, I decided I should just go and measure them. To be absolutely clear: I have no idea what I’m …">
+
+
+	<link rel="top" href="#" />
+	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
+		
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	      <nav class="pages">
+	      </nav>
+		<a href="." class="title">IGNNE's Github Page - Home</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>Measurement of Headphone Outputs</h1>
+		
+<div class="metadata">
+  <time datetime="2022-09-20T00:00:00+02:00" pubdate>Tue 20 September 2022</time>
+    <address class="vcard author">
+      by <a class="url fn" href="./author/ignne.html">IGNNE</a>
+    </address>
+  in <a href="./category/audio.html">Audio</a>
+</div>		
+		<h2 id="introduction">Introduction</h2>
+<p>For various reasons, I own a couple of very different audio / headphone outputs (“ADCs”). After one evening, where I dove too deep into the rabbit hole of audio quality, I decided I should just go and measure them.</p>
+<p>To be absolutely clear: I have no idea what I’m doing. I have successfully ruined my ears with a combination of Rock, Techno and video games (and I would do it again). I do, however, technically own a related degree, and although I admit I kind of wriggled my way through signal theory, this should not be too hard to pull off.</p>
+<p>To make it easy to expand this section, each device I test will get an article of its own.</p>
+<h2 id="test-methods">Test Methods</h2>
+<p>Simple for now: 12 kHz sine wave, 0.9 amplitude (generated with Audacity). 48 kHz sample rate everywhere, so no resampling.</p>
+<p><a href="https://www.embeddedartists.com/products/labtool/">Labtool</a> logic analyzer/oscilloscope with a no-name 1x test probe (not that it should matter, we’re talking audio frequencies here), 200kHz sampling, adjusted to about 50% amplitude.</p>
+<p>No load, measured with a standard 3.5 mm “aux cable” simply clipped to the probe / ground. All devices adjusted to loud, but still comfortable headphone level using a run-of-the-mill pair of headphones.</p>
+<p>FFT over one whole data set (around 300 ms), Hamming window, converted to decibel. Reference value is always the highest peak in the fft; for the null measurement, it’s the peak from the 12 kHz test.</p>
+<p>Generally crowded desk, laptop charging via USB-C dock, two monitors and lots of cheap cables around. This is aimed at real world performance, not some kind of test bench values.</p>
+<h2 id="tests">Tests</h2>
+<p><a href="/headphone-output-yamaha-avr.html">Yamaha RX-V667 AVR</a></p>
+<p><a href="/headphone-output-lenovo-l390.html">Lenovo L390</a></p>
+<p><a href="/headphone-output-startech.html">Chinese Startech USB card</a></p>
+<p><a href="/headphone-output-tascam.html">Tascam US-16x08 audio interface</a></p>	
+
+	</article>
+
+
+
+		  </div>
+		  		  
+		  <div class="sidebar">
+
+			<aside>
+			  <h2>Projects</h2>
+			  <ul>
+				  <li><a href="/pages/the-scrap-drone.html">The Scrap Drone</a></li>
+				  <li><a href="/ikea-sensor.html">Ikea VINDRIKTNING Sensor Upgrades</a></li>
+				  <li><a href="/measurement-of-headphone-outputs.html">Measuring Headphone Outputs</a></li>
+			  </ul>
+			</aside>
+
+	        <nav>
+	          <h2>Articles by Category</h2>
+	          <ul>
+	              <li class="active"><a href="./category/audio.html">Audio</a></li>
+	              <li ><a href="./category/drone-flight-logs.html">Drone Flight Logs</a></li>
+	              <li ><a href="./category/scrap-drone.html">Scrap Drone</a></li>
+	              <li ><a href="./category/smart-home.html">Smart Home</a></li>
+	          </ul>
+	        </nav>
+
+
+		  </div>
+
+	
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  <a href=https://github.com/IGNNE>IGNNE</a> 2021 - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>, and the <a href="https://ethanschoonover.com/solarized/">Solarized</a> colors.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>
