@@ -73,7 +73,7 @@ small) FF window. Close it for now.</li>
 <code>cp -r usr / &amp;&amp; cp -r etc /</code></li>
 <li><code>touch /etc/mobile-config-firefox/*/*.css</code></li>
 <li>Let’s fix proper touch screen scrolling:
-<code>echo "MOZ_USE_XINPUT2=1 /usr/bin/firefox $*" &gt; /usr/local/bin/firefox</code></li>
+<code>echo "MOZ_USE_XINPUT2=1 /usr/bin/firefox $*" &gt; /usr/local/bin/firefox &amp;&amp; chmod +x /usr/local/bin/firefox</code></li>
 <li>The default postmarketOS/Mobian config puts the address bar at the
 bottom. If you don’t like that, here’s how to change it: open
 <code>/etc/mobile-config-firefox/userChrome/browser.css</code> and
