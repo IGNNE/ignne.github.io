@@ -40,57 +40,116 @@
     </address>
   in <a href="./category/audio.html">Audio</a>
 </div>		
-		<p>Some time ago, I wrote about my <a href="/headphone-output-tascam.html">US-16x08 acting up</a>. So, some time last fall, I decided to open it and see what might be the cause. This is mostly a teardown “manual”, some photos of the chips in there, and some ranting about cheap choices. Oh, and if you are impatient: I didn’t manage to fix it, but I made a workaround at the very end.</p>
+		<p>Some time ago, I wrote about my <a href="/headphone-output-tascam.html">US-16x08 acting up</a>. So, some
+time last fall, I decided to open it and see what might be the cause.
+This is mostly a teardown “manual”, some photos of the chips in there,
+and some ranting about cheap choices. Oh, and if you are impatient: I
+didn’t manage to fix it, but I made a workaround at the very end.</p>
 <h2 id="motivation">Motivation</h2>
-<p>Headphone output is bad. Lots of noise, harmonics, left-right was unbalanced at low levels, and I could only use low levels, because at more than the first 2 mm of the dial, it would blow my ears out. Also, occasional software/firmware(?) hiccups, but nothing persistent.</p>
+<p>Headphone output is bad. Lots of noise, harmonics, left-right was
+unbalanced at low levels, and I could only use low levels, because at
+more than the first 2 mm of the dial, it would blow my ears out. Also,
+occasional software/firmware(?) hiccups, but nothing persistent.</p>
 <h2 id="teardown">Teardown</h2>
-<p>Every screw in there is some kind of crosshead (Philips) head, but there are a couple of sizes. I highly recommend an electric screw driver to not go insane, plus a normal one to not break too many screws.</p>
+<p>Every screw in there is some kind of crosshead (Philips) head, but
+there are a couple of sizes. I highly recommend an electric screw driver
+to not go insane, plus a normal one to not break too many screws.</p>
 <h3 id="screws-so-many-screws">Screws, So Many Screws</h3>
-<p>First, remove the desk stands or rack mount (whichever you have put on). Those are the only non-crosshead screws, but surely you remember where you put the hex key that it shipped with, <em>right?</em></p>
-<p>Then, remove all the screws that are visible on the outside. Take a note of which screw goes where. I put mine on a flat dry-erase board and wrote their origin next to them. Don’t forget the bottom side.</p>
+<p>First, remove the desk stands or rack mount (whichever you have put
+on). Those are the only non-crosshead screws, but surely you remember
+where you put the hex key that it shipped with, <em>right?</em></p>
+<p>Then, remove all the screws that are visible on the outside. Take a
+note of which screw goes where. I put mine on a flat dry-erase board and
+wrote their origin next to them. Don’t forget the bottom side.</p>
 <p><img src="/images/tascam-1.png" style="width:70.0%"/></p>
-<p>If you’ve done this, you should be able to slide the shell open like this. It might need a bit of wiggling around.</p>
+<p>If you’ve done this, you should be able to slide the shell open like
+this. It might need a bit of wiggling around.</p>
 <p><img src="/images/tascam-2.png" style="width:70.0%"/></p>
-<p>This should give you access to quite a few of the breakable parts, like the DC jack.</p>
+<p>This should give you access to quite a few of the breakable parts,
+like the DC jack.</p>
 <h3 id="even-more-screws">Even More Screws</h3>
 <p>Start by peeling off the knobs on the front.</p>
 <p><img src="/images/tascam-3.png" style="width:70.0%"/></p>
-<p>Now, a slightly tricky part: Slide and wiggle the front plate off without breaking the two light guides for the LEDs.</p>
+<p>Now, a slightly tricky part: Slide and wiggle the front plate off
+without breaking the two light guides for the LEDs.</p>
 <p><img src="/images/tascam-4.png" style="width:70.0%"/></p>
-<p>Guess what, I failed this step. However, a drop of clear glue and a steady hand can easily fix this.</p>
+<p>Guess what, I failed this step. However, a drop of clear glue and a
+steady hand can easily fix this.</p>
 <p><img src="/images/tascam-5.png" style="width:70.0%"/></p>
-<p>Below this cover, you’ll find… more screws! Yay! Remove all of those, and don’t forget the thin nuts and washers for each dial.</p>
+<p>Below this cover, you’ll find… more screws! Yay! Remove all of those,
+and don’t forget the thin nuts and washers for each dial.</p>
 <p><img src="/images/tascam-6.png" style="width:70.0%"/></p>
-<p>Next part, the metallic bracket/sheet. First, remove the screws left on the sides:</p>
+<p>Next part, the metallic bracket/sheet. First, remove the screws left
+on the sides:</p>
 <p><img src="/images/tascam-7.png" style="width:70.0%"/></p>
-<p>Then, remove all the silver-colored screws holding the main PCB in place. Besides the obvious ones, don’t forget the two hidden ones here…</p>
+<p>Then, remove all the silver-colored screws holding the main PCB in
+place. Besides the obvious ones, don’t forget the two hidden ones
+here…</p>
 <p><img src="/images/tascam-8.png" style="width:70.0%"/></p>
 <p>…and here:</p>
 <p><img src="/images/tascam-9.png" style="width:70.0%"/></p>
-<p>This includes the common mode choke / “cable organizer” screw. Once that is out of the way, you can unplug the cable it was choking and take off the metal bracket and the front plastic cover.</p>
+<p>This includes the common mode choke / “cable organizer” screw. Once
+that is out of the way, you can unplug the cable it was choking and take
+off the metal bracket and the front plastic cover.</p>
 <p><img src="/images/tascam-10.png" style="width:70.0%"/></p>
 <h3 id="results">Results!</h3>
 <p>Congrats, here you have it, all disassembled:</p>
 <p><img src="/images/tascam-12.png" style="width:50.0%"/></p>
 <p>And all the small parts that came out of it:</p>
 <p><img src="/images/tascam-11.png" style="width:70.0%"/></p>
-<p>I found it easier to cut the plastic sheet on the bottom than to undo all those little plastic clips. It’s only for insulation, so a few well-placed strips of duck tape will fix it. If you need to, you can squeeze the plastic clips holding the two large auxiliary PCBs with small pliers to get them out.</p>
+<p>I found it easier to cut the plastic sheet on the bottom than to undo
+all those little plastic clips. It’s only for insulation, so a few
+well-placed strips of duck tape will fix it. If you need to, you can
+squeeze the plastic clips holding the two large auxiliary PCBs with
+small pliers to get them out.</p>
 <h2 id="internals">Internals</h2>
-<p>Since you might just be interested in what’s inside, here are some pics. The main chip is an ADSP-BF606, which does all the DSP mixing and (I assume) communication with the host.</p>
+<p>Since you might just be interested in what’s inside, here are some
+pics. The main chip is an ADSP-BF606, which does all the DSP mixing and
+(I assume) communication with the host.</p>
 <p><img src="/images/tascam-15.png" style="width:70.0%"/></p>
-<p>Here is a shot of the other side. Part 1 is the power supply. Yes, it has switching converters, but they are all switching well above a couple 100kHz. IIRC the main one runs at 1 MHz. So, no problems there. Part 2 shows the advertised discrete headphone amps, which are, in fact, made with discrete transistors. Part 3 is the backside with some Opamps and the daughter board to fit more connectors.</p>
+<p>Here is a shot of the other side. Part 1 is the power supply. Yes, it
+has switching converters, but they are all switching well above a couple
+100kHz. IIRC the main one runs at 1 MHz. So, no problems there. Part 2
+shows the advertised discrete headphone amps, which are, in fact, made
+with discrete transistors. Part 3 is the backside with some Opamps and
+the daughter board to fit more connectors.</p>
 <p><img src="/images/tascam-16.png" style="width:70.0%"/></p>
-<h2 id="trying-to-diagnose-the-headphone-output">Trying to Diagnose the Headphone Output</h2>
+<h2 id="trying-to-diagnose-the-headphone-output">Trying to Diagnose the
+Headphone Output</h2>
 <p>Here is a rough diagram of the headphone output:</p>
 <p><img src="/images/tascam-13.png" style="width:70.0%"/></p>
-<p>The DACs are AKM4384, budget chips but in theory more than capable to deliver a clean signal. Then, some JRC4580 opamps. They really like those opamps, they are everywhere. My guess is that they bought a warehouse full of unwanted opamps and now they have to get rid of them somehow. Finally, on the backside, just below those stylish black-orange caps, is a small unknown chip which I guess is another amplifier to deliver some more juice. Here it is:</p>
+<p>The DACs are AKM4384, budget chips but in theory more than capable to
+deliver a clean signal. Then, some JRC4580 opamps. They really like
+those opamps, they are everywhere. My guess is that they bought a
+warehouse full of unwanted opamps and now they have to get rid of them
+somehow. Finally, on the backside, just below those stylish black-orange
+caps, is a small unknown chip which I guess is another amplifier to
+deliver some more juice. Here it is:</p>
 <p><img src="/images/tascam-14.png" style="width:70.0%"/></p>
-<p>All in all, the headphone side looks like they cut some corners, but overall knew what they did. There are large caps everywhere, everything looks nice and tidy, and they put quite a few resistors in parallel to the output so that (my guess) whatever happens at the output would not influence the signal generation too much.</p>
-<p>Sadly, the signal is distorted at every step. My first guess was that the Opamps are amplifying too much, but lowering their feedback resistor value only made things slightly quieter. I measured and tinkered and ultimately gave up. Maybe I could have replaced the caps, but this interface is not that old, and they all looked solid. My current theories are: a) the DSP sends bullshit to the DACs and/or configures them wrong, and b) the DACs are just broken internally. Sadly, I didn’t have the patience to capture and decode the communication, so I guess we’ll never know.</p>
+<p>All in all, the headphone side looks like they cut some corners, but
+overall knew what they did. There are large caps everywhere, everything
+looks nice and tidy, and they put quite a few resistors in parallel to
+the output so that (my guess) whatever happens at the output would not
+influence the signal generation too much.</p>
+<p>Sadly, the signal is distorted at every step. My first guess was that
+the Opamps are amplifying too much, but lowering their feedback resistor
+value only made things slightly quieter. I measured and tinkered and
+ultimately gave up. Maybe I could have replaced the caps, but this
+interface is not that old, and they all looked solid. My current
+theories are: a) the DSP sends bullshit to the DACs and/or configures
+them wrong, and b) the DACs are just broken internally. Sadly, I didn’t
+have the patience to capture and decode the communication, so I guess
+we’ll never know.</p>
 <h2 id="fixing-the-problem">“Fixing” the Problem</h2>
-<p>To use more than the first 2 mm of the volume dial, I made a small dampener (and impedance converter), mainly based on <a href="https://diyaudioheaven.wordpress.com/headphones/headphone-attenuation-adapter/">this excellent site</a>. Here’s the result. Yes, that is a Lego brick.</p>
+<p>To use more than the first 2 mm of the volume dial, I made a small
+dampener (and impedance converter), mainly based on <a href="https://diyaudioheaven.wordpress.com/headphones/headphone-attenuation-adapter/">this
+excellent site</a>. Here’s the result. Yes, that is a Lego brick.</p>
 <p><img src="/images/tascam-17.png" style="width:70.0%"/></p>
-<p>I can now use more of the volume dial, I avoid the very low end where the stereo channels are really unbalanced, and even my high-impedance high-efficiency “active” Bose QC-25 headphones are happy now. Sure, the noise is still there, but unless I can justify buying a new interface, this will do.</p>	
+<p>I can now use more of the volume dial, I avoid the very low end where
+the stereo channels are really unbalanced, and even my high-impedance
+high-efficiency “active” Bose QC-25 headphones are happy now. Sure, the
+noise is still there, but unless I can justify buying a new interface,
+this will do.</p>	
 
 	</article>
 
@@ -114,6 +173,7 @@
 	          <ul>
 	              <li class="active"><a href="./category/audio.html">Audio</a></li>
 	              <li ><a href="./category/drone-flight-logs.html">Drone Flight Logs</a></li>
+	              <li ><a href="./category/misc.html">Misc</a></li>
 	              <li ><a href="./category/scrap-drone.html">Scrap Drone</a></li>
 	              <li ><a href="./category/smart-home.html">Smart Home</a></li>
 	          </ul>

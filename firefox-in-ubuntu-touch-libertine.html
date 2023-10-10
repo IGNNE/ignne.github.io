@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Firefox in Ubuntu Touch (Libertine) - IGNNE's Github Page</title>	
+	<meta name="author" content="IGNNE">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+
+	<meta name="description" content="Ubuntu Touch is an interesting alternative to Android and iOS. But the most critical app (for me), the browser, is feeling a bit underwhelming. Luckily, it brings a compatibility layer called Libertine to run desktop applications, which means it is relatively straightforward to install a normal desktop firefox. Or so …">
+
+
+	<link rel="top" href="#" />
+	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
+		
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	      <nav class="pages">
+	      </nav>
+		<a href="." class="title">IGNNE's Github Page</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>Firefox in Ubuntu Touch (Libertine)</h1>
+		
+<div class="metadata">
+  <time datetime="2023-10-10T00:00:00+02:00" pubdate>Tue 10 October 2023</time>
+    <address class="vcard author">
+      by <a class="url fn" href="./author/ignne.html">IGNNE</a>
+    </address>
+  in <a href="./category/misc.html">Misc</a>
+</div>		
+		<p><a href="https://ubports.com/">Ubuntu Touch</a> is an interesting
+alternative to Android and iOS. But the most critical app (for me), the
+browser, is feeling a bit underwhelming. Luckily, it brings a
+compatibility layer called <em>Libertine</em> to run desktop
+applications, which means it is relatively straightforward to install a
+normal desktop firefox. Or so I thought.</p>
+<p>Ubuntu famously replaced the regular browser .deb packages with snap
+ones, and snap isn’t really supported on Ubuntu Touch. So we need to do
+a few extra steps. Also, I’m going to borrow the firefox mobile config,
+which originally came from postmarketOS, and is also used in
+Mobian/Debian.</p>
+<p>All of this is tested on a Oneplus 6 with UT 20.04 (‘focal’).</p>
+<ol type="1">
+<li>Install a Libertine container from the system settings, this will
+take a while</li>
+<li>In the container settings, add the ppa to get the .deb for firefox:
+<code>ppa:ubuntu-mozilla-security/ppa</code></li>
+<li>Open a libertine shell (<code>lish</code>, if you installed the
+Libtertine Tweak Tool), check if
+<code>apt update &amp;&amp; apt install --dry-run firefox</code> wants
+to download the ppa version</li>
+<li>In the container settings, install <code>firefox</code></li>
+<li>Now, opening FF from the app menu should successfully show a (very
+small) FF window. Close it for now.</li>
+<li>Manually download
+<code>https://packages.debian.org/sid/firefox-esr-mobile-config</code></li>
+<li>Extract the archive (<code>ar x "firefox*.deb"</code>), then
+<code>tar xf control.tar.xz</code></li>
+<li>Debian uses FF ESR, let’s fix that:
+<code>mv usr/lib/firefox-esr usr/lib/firefox</code></li>
+<li>Copy to the right places:
+<code>cp -r usr / &amp;&amp; cp -r etc /</code></li>
+<li><code>touch /etc/mobile-config-firefox/*/*.css</code></li>
+<li>Let’s fix proper touch screen scrolling:
+<code>echo "MOZ_USE_XINPUT2=1 /usr/bin/firefox $*" &gt; /usr/local/bin/firefox</code></li>
+<li>The default postmarketOS/Mobian config puts the address bar at the
+bottom. If you don’t like that, here’s how to change it: open
+<code>/etc/mobile-config-firefox/userChrome/browser.css</code> and
+comment out the <code>#browser {...}</code> block (helpfully labeled in
+the comment)</li>
+</ol>
+<p>Now, if you open firefox, it should be properly scaled, support touch
+scrolling, and thanks to the magic of Libertine, the on-screen keyboard
+works for me as well. Browsing performance is quite good, especially
+considering that there is no hardware acceleration yet.</p>	
+
+	</article>
+
+
+
+		  </div>
+		  		  
+		  <div class="sidebar">
+
+			<aside>
+			  <h2>Projects</h2>
+			  <ul>
+				  <li><a href="/pages/the-scrap-drone.html">The Scrap Drone</a></li>
+				  <li><a href="/ikea-sensor.html">Ikea VINDRIKTNING Sensor Upgrades</a></li>
+				  <li><a href="/measurement-of-headphone-outputs.html">Measuring Headphone Outputs</a></li>
+			  </ul>
+			</aside>
+
+	        <nav>
+	          <h2>Articles by Category</h2>
+	          <ul>
+	              <li ><a href="./category/audio.html">Audio</a></li>
+	              <li ><a href="./category/drone-flight-logs.html">Drone Flight Logs</a></li>
+	              <li class="active"><a href="./category/misc.html">Misc</a></li>
+	              <li ><a href="./category/scrap-drone.html">Scrap Drone</a></li>
+	              <li ><a href="./category/smart-home.html">Smart Home</a></li>
+	          </ul>
+	        </nav>
+
+
+		  </div>
+
+	
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  <a href=https://github.com/IGNNE>IGNNE</a> 2021 - Proudly powered by <a href="https://getpelican.com/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>, and the <a href="https://ethanschoonover.com/solarized/">Solarized</a> colors.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

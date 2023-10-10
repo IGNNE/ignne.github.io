@@ -40,23 +40,55 @@
     </address>
   in <a href="./category/smart-home.html">Smart Home</a>
 </div>		
-		<p>Before Christmas, I needed a battery case for a last-minute present. Much to my surprise, I had nothing fitting in my big box of parts. So, I went to the overpriced decorative crap store and bought one of those ultra-cheap led lights. Except this one wasn’t cheap. Likely 2x the online price, and at least 10x the manufacturing cost. But hey, it came with batteries included.</p>
-<p>Back at home, I cut the battery compartment box, finished my present (it didn’t work, for reasons totally unrelated to this), and threw the lights aside.</p>
-<p>Then, some days after Christmas, I stumbled across <a href="https://old.reddit.com/r/techsupportmacgyver/comments/100zytn/battery_devouring_led_fairy_lights_converted_to/">this reddit post</a> of someone who turned fairly similar lights into USB-powered ones. “Huh, nice”, I thought.</p>
-<p>Then, today, I found myself absolutely fed up with writing the paper I am supposed to write. Too tired to play games and too wired up to relax with some book, I decided to replicate that little project.</p>
-<p>The starting point was easy, I found a piece of scrap circuit board with a mini USB connector conveniently soldered on. I cut off some used parts, unsoldered a bit of old stuff, and there we go!</p>
+		<p>Before Christmas, I needed a battery case for a last-minute present.
+Much to my surprise, I had nothing fitting in my big box of parts. So, I
+went to the overpriced decorative crap store and bought one of those
+ultra-cheap led lights. Except this one wasn’t cheap. Likely 2x the
+online price, and at least 10x the manufacturing cost. But hey, it came
+with batteries included.</p>
+<p>Back at home, I cut the battery compartment box, finished my present
+(it didn’t work, for reasons totally unrelated to this), and threw the
+lights aside.</p>
+<p>Then, some days after Christmas, I stumbled across <a href="https://old.reddit.com/r/techsupportmacgyver/comments/100zytn/battery_devouring_led_fairy_lights_converted_to/">this
+reddit post</a> of someone who turned fairly similar lights into
+USB-powered ones. “Huh, nice”, I thought.</p>
+<p>Then, today, I found myself absolutely fed up with writing the paper
+I am supposed to write. Too tired to play games and too wired up to
+relax with some book, I decided to replicate that little project.</p>
+<p>The starting point was easy, I found a piece of scrap circuit board
+with a mini USB connector conveniently soldered on. I cut off some used
+parts, unsoldered a bit of old stuff, and there we go!</p>
 <p><img src="/images/led-usb-connector.png" style="width:30.0%"/></p>
-<p>Next step: Voltage. Originally, this thing ran on three 1.5V AA batteries, with one (1) current-limiting resistor. However, it had a little sign telling me that it was supposed to run on 3V, 20mA.</p>
-<p>So, being the overengineering idiot that I am, I decided to give it just that. The first attempt used a LM317 variable-voltage linear converter. However, no light. Hm.</p>
-<p>I double-checked everything, and I decided that my LM317 was just dead. I’m writing this during the (extended) chip crisis of 2022, so I’ve lost roughly half my life savings there.</p>
-<p>Attempt number two: I found a 7533. If you don’t know this, the 75XX is a series of old and trusty devices that regulate the output to whatever “XX” is (in my case, 33, meaning 3.3V). This time, everything went well. I even went the extra mile and gave it some current limiting and strain relief.</p>
+<p>Next step: Voltage. Originally, this thing ran on three 1.5V AA
+batteries, with one (1) current-limiting resistor. However, it had a
+little sign telling me that it was supposed to run on 3V, 20mA.</p>
+<p>So, being the overengineering idiot that I am, I decided to give it
+just that. The first attempt used a LM317 variable-voltage linear
+converter. However, no light. Hm.</p>
+<p>I double-checked everything, and I decided that my LM317 was just
+dead. I’m writing this during the (extended) chip crisis of 2022, so
+I’ve lost roughly half my life savings there.</p>
+<p>Attempt number two: I found a 7533. If you don’t know this, the 75XX
+is a series of old and trusty devices that regulate the output to
+whatever “XX” is (in my case, 33, meaning 3.3V). This time, everything
+went well. I even went the extra mile and gave it some current limiting
+and strain relief.</p>
 <p><img src="/images/led-7533.png" style="width:40.0%"/></p>
 <p>And, the whole thing:</p>
 <p><img src="/images/led-full.png" style="width:40.0%"/></p>
-<p>As you can see, I was not happy with the amount of light and the current limiting, and kept piling on resistors to make it brighter. It took me more time than I am willing to admit to decide that my whole voltage converter idea was stupid. LEDs are current-driven after all, the overall current here is negligible, and I probably spent more time on them than the overworked engineer designing them and the poor sweatshop worker assembling them. Combined.</p>
-<p>So, I got rid of the 7533, and replaced it by a strategic solder bridge. The only downside is that the circuit board looks sad and empty now. Meh, can’t have everything.</p>
+<p>As you can see, I was not happy with the amount of light and the
+current limiting, and kept piling on resistors to make it brighter. It
+took me more time than I am willing to admit to decide that my whole
+voltage converter idea was stupid. LEDs are current-driven after all,
+the overall current here is negligible, and I probably spent more time
+on them than the overworked engineer designing them and the poor
+sweatshop worker assembling them. Combined.</p>
+<p>So, I got rid of the 7533, and replaced it by a strategic solder
+bridge. The only downside is that the circuit board looks sad and empty
+now. Meh, can’t have everything.</p>
 <p><img src="/images/led-bare.png" style="width:40.0%"/></p>
-<p>Note to self: When at my parents’ house, nick a spare USB charger.</p>	
+<p>Note to self: When at my parents’ house, nick a spare USB
+charger.</p>	
 
 	</article>
 
@@ -80,6 +112,7 @@
 	          <ul>
 	              <li ><a href="./category/audio.html">Audio</a></li>
 	              <li ><a href="./category/drone-flight-logs.html">Drone Flight Logs</a></li>
+	              <li ><a href="./category/misc.html">Misc</a></li>
 	              <li ><a href="./category/scrap-drone.html">Scrap Drone</a></li>
 	              <li class="active"><a href="./category/smart-home.html">Smart Home</a></li>
 	          </ul>
